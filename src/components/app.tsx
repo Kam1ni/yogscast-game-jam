@@ -1,5 +1,6 @@
 import React from "react";
 import {Engine, Color, FreeCamera, OrthographicCamera, degToRadians, PerspectiveCamera, Vector2} from "scrapy-engine";
+import { TestWorld } from "@/game/world/test-world";
 
 
 export class App extends React.Component{
@@ -18,7 +19,8 @@ export class App extends React.Component{
 	public componentDidMount():void {
 		this.engine = new Engine(document.getElementById("game-canvas") as HTMLCanvasElement);
 		this.engine.init();
-		this.engine.setCanvasSize(new Vector2(320, 160));
+		this.engine.setWorld(new TestWorld(this.engine));
+		this.engine.renderBoundingBoxes = true;
 		this.engine.start();
 	}
 }

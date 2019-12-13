@@ -1,4 +1,4 @@
-html, body, #b3n-arena, .canvas-container {
+html, body, #game-container, .canvas-container {
 	width:100vw;
 	height:100vh;
 	overflow-x:hidden;
@@ -12,15 +12,3 @@ html, body, #b3n-arena, .canvas-container {
 canvas {
 	image-rendering: pixelated;
 }
-
-/*
-.canvas-container {
-	overflow-x:visible;
-	overflow-y:visible;
-}
-
-.canvas-container > canvas {
-	transform:scale(4,4);
-	transform-origin: top left;
-}
-*/
