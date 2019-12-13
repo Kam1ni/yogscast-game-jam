@@ -1,0 +1,40 @@
+{
+	"name": "yogscast-game-jam",
+	"version": "0.0.1",
+	"main": "dist/index.js",
+	"scripts": {
+		"serve": "webpack-dev-server --mode=development",
+		"build": "webpack --mode=development",
+		"lint": "tslint --project . --fix"
+	},
+	"author": "Kamil Krzysztof Kulach",
+	"license": "UNLICENSED",
+	"dependencies": {
+		"scrapy-engine": "0.0.10"
+	},
+	"lint-staged": {
+		"src/**/*.ts": [
+			"tslint --project . --fix"
+		]
+	},
+	"husky": {
+		"hooks": {
+			"pre-commit": "lint-staged"
+		}
+	},
+	"devDependencies": {
+		"@types/react": "^16.9.11",
+		"@types/react-dom": "^16.9.4",
+		"copy-webpack-plugin": "^5.0.5",
+		"husky": "^3.0.9",
+		"lint-staged": "^9.4.3",
+		"react": "^16.12.0",
+		"react-dom": "^16.12.0",
+		"ts-loader": "^6.2.1",
+		"tslint": "^5.20.1",
+		"typescript": "^3.7.2",
+		"webpack": "^4.41.2",
+		"webpack-cli": "^3.3.10",
+		"webpack-dev-server": "^3.9.0"
+	}
+}

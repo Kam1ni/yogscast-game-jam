@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Yogscast game arena</title>
+	<link rel="stylesheet" href="./style.css">
+	<link href="https://fonts.googleapis.com/css?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+	<div id="b3n-arena"></div>
+	<script type="text/javascript">
+		let baseTag = document.createElement("base");
+		let url = location.href;
+		if (url.match(/index\.html$/)){
+			url = url.substr(0, url.length - "index.html".length);
+		}
+		baseTag.baseURI = url;
+		document.head.append(baseTag);
+	</script>
+
+	<script src="./index.js"></script>
+</body>
+</html>
