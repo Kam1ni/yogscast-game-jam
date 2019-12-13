@@ -7,6 +7,7 @@ const SIZE = 32;
 export class Enemy extends Character {
 	public sprite:SimObject;
 	protected maxSpeed:number = 128;
+	protected damagePerHit:number = 1;
 
 	public constructor(engine:Engine) {
 		super(engine);
@@ -30,7 +31,7 @@ export class Enemy extends Character {
 		if (magnitude < 56) {
 			xDiff = 0;
 			yDiff = 0;
-			this.attackPlayer();
+			this.attack();
 		}
 
 		if (xDiff > 0) {
@@ -52,11 +53,15 @@ export class Enemy extends Character {
 		super.update(dt);
 	}
 
-	public getRoom():Room {
-		return this.getParent() as Room;
+
+	public attack():void {
+		if (!this.canAttack()) return;
+		this.getRoom().player.doDamage(this.damagePerHit);
+		super.attack();
 	}
 
-	public attackPlayer():void {
-		console.log("ATTACKING");
+	public kill():void {
+		let room = this.getRoom().removeEnemy(this);
+		super.destroy();
 	}
 }

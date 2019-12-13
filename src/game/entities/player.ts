@@ -1,6 +1,7 @@
 import { SimObject, Rect, Engine, Color, Vector3, Vector2, Keys, approach, BoundingBox } from "scrapy-engine";
 import { Direction } from "../utils/direction";
 import { Character } from "./character";
+import { Projectile } from "./projectile";
 
 const SIZE = 32;
 const CHECK_HITBOX_SIZE = 32;
@@ -10,9 +11,12 @@ export class Player extends Character{
 	public sprite:SimObject;
 	public lookingDirection:Direction = Direction.RIGHT;
 	public checkHitbox:BoundingBox;
+	public attackInterval:number = 250;
+	protected maxHealth = 5;
 
 	public constructor(engine:Engine) {
 		super(engine);
+		this.health = this.maxHealth;
 		this.sprite = new Rect(this.engine, SIZE, SIZE, Color.blue());
 		this.sprite.transform.position.x = -SIZE / 2;
 		this.sprite.transform.position.y = -SIZE / 2;
@@ -52,6 +56,12 @@ export class Player extends Character{
 			targetX = 0;
 		}
 
+		if (this.engine.input.isKeyPressed(Keys.Space)) {
+			if (this.canAttack()) {
+				this.attack();
+			}
+		}
+
 
 		this.velocity.x = approach(this.velocity.x, targetX, dt * this.acceleration);
 		this.velocity.y = approach(this.velocity.y, targetY, dt * this.acceleration);
@@ -74,5 +84,16 @@ export class Player extends Character{
 		} else {
 			this.checkHitbox.transform.position.x = -SIZE / 2;
 		}
+	}
+
+	public attack():void {
+		let projectile = new Projectile(this.engine, this);
+		projectile.direction = this.lookingDirection;
+		this.getRoom().addProjectile(projectile);
+		super.attack();
+	}
+
+	public kill():void {
+		console.log("GAME OVER");
 	}
 }

@@ -4,6 +4,7 @@ import { Begar } from "./begar";
 import { Wall } from "./wall";
 import { Character } from "./character";
 import { Enemy } from "./enemy";
+import { Projectile } from "./projectile";
 
 export abstract class Room extends SimObject {
 	public background:SimObject;
@@ -11,6 +12,7 @@ export abstract class Room extends SimObject {
 	public begars:Begar[] = [];
 	public walls:Wall[] = [];
 	public enemies:Enemy[] = [];
+	public projectiles:Projectile[] = [];
 
 	public constructor(engine:Engine, player:Player) {
 		super(engine);
@@ -38,6 +40,7 @@ export abstract class Room extends SimObject {
 		}
 		this.correctForBegarCollision(this.player);
 		this.correctForWallCollision(this.player);
+		this.checkForProjectileCollisions();
 	}
 
 	private checkForTouchingBegar():Begar {
@@ -59,6 +62,29 @@ export abstract class Room extends SimObject {
 	public addEnemey(enemy:Enemy):void {
 		this.enemies.push(enemy);
 		this.addChild(enemy);
+	}
+
+	public addProjectile(projectile:Projectile):void {
+		projectile.transform.position.x = projectile.sender.transform.position.x;
+		projectile.transform.position.y = projectile.sender.transform.position.y;
+		this.projectiles.push(projectile);
+		this.addChild(projectile);
+	}
+
+	public removeProjectile(projectile:Projectile):void {
+		let i = this.projectiles.indexOf(projectile);
+		if (i != -1) {
+			this.projectiles.splice(i, 1);
+		}
+		this.removeChild(projectile);
+	}
+
+	public removeEnemy(enemy:Enemy):void {
+		let i = this.enemies.indexOf(enemy);
+		if (i != -1) {
+			this.enemies.splice(i, 1);
+		}
+		this.removeChild(enemy);
 	}
 
 	public addWall(wall:Wall):void {
@@ -122,7 +148,7 @@ export abstract class Room extends SimObject {
 
 	public correctForWallCollision(char:Character):void {
 		for (let wall of this.walls) {
-			this.correctForCollision(char, wall.hitBox);
+			this.correctForCollision(char, wall.hitbox);
 		}
 	}
 
@@ -136,6 +162,38 @@ export abstract class Room extends SimObject {
 		for (let enemy of this.enemies) {
 			this.correctForBegarCollision(enemy);
 			this.correctForWallCollision(enemy);
+		}
+	}
+
+	public checkForProjectileCollisions():void {
+		for (let projectile of this.projectiles) {
+			if (this.player != projectile.sender) {
+				let collision = projectile.hitbox.isTouching(this.player.hitbox);
+				if (collision) {
+					this.player.doDamage(projectile.damage);
+					this.removeProjectile(projectile);
+					continue;
+				}
+			}
+
+			for (let enemy of this.enemies) {
+				if (enemy != projectile.sender) {
+					let collision = projectile.hitbox.isTouching(enemy.hitbox);
+					if (collision) {
+						enemy.doDamage(projectile.damage);
+						this.removeProjectile(projectile);
+						continue;
+					}
+				}
+			}
+
+			for (let wall of this.walls) {
+				let collision = projectile.hitbox.isTouching(wall.hitbox);
+				if (collision) {
+					this.removeProjectile(projectile);
+					continue;
+				}
+			}
 		}
 	}
 }
