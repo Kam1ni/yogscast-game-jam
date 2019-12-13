@@ -4,6 +4,7 @@ import { Player } from "./player";
 import { Begar } from "./begar";
 import { Direction } from "../utils/direction";
 import { Wall } from "./wall";
+import { Enemy } from "./enemy";
 
 
 export class TestRoom extends Room{
@@ -20,6 +21,9 @@ export class TestRoom extends Room{
 		this.addWall(new Wall(this.engine, 0, -32, 512, 32));
 		this.addWall(new Wall(this.engine, -32, 0, 32, 256));
 		this.addWall(new Wall(this.engine, 512, 0, 32, 256));
+
+		let enemy = new Enemy(engine);
+		this.addEnemey(enemy);
 	}
 
 }
