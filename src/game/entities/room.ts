@@ -18,7 +18,9 @@ export abstract class Room extends SimObject {
 	public constructor(engine:Engine, player:Player) {
 		super(engine);
 		
-		this.background = new Floor(engine, 16, 8);
+		this.background = new Floor(engine, 18, 10);
+		this.background.transform.position.x -= 16;
+		this.background.transform.position.y -= 16;
 		this.addChild(this.background);
 
 		this.player = player;
