@@ -20,12 +20,13 @@ export class App extends React.Component{
 	public componentDidMount():void {
 		this.engine = new Engine(document.getElementById("game-canvas") as HTMLCanvasElement);
 		this.engine.init();
+		this.engine.setCanvasSize(new Vector2((256 + 32) * 4, (128 + 32) * 4));
 		new TestWorld(this.engine);
 		this.engine.setWorld(new MainWorld(this.engine));
+		this.engine.getCamera().transform.scale.x = 4;
+		this.engine.getCamera().transform.scale.y = 4;
+		this.engine.getCamera().transform.scale.z = 4;
 		let cam = this.engine.getCamera();
-		cam.transform.scale.x = 3;
-		cam.transform.scale.y = 3;
-		cam.transform.scale.z = 3;
 		this.engine.start();
 	}
 }

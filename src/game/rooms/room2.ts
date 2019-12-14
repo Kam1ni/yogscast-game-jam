@@ -1,27 +1,20 @@
 import { Room } from "../entities/room";
-import { Door } from "../entities/door";
-import { Torch } from "../entities/torch";
+import { Begar } from "../entities/begar";
+import { Vector3 } from "scrapy-engine";
+import { BlueBall } from "../entities/blue-ball";
 import { WallCorner } from "../entities/wall-corner";
 import { Direction } from "../utils/direction";
+import { Torch } from "../entities/torch";
+import { Door } from "../entities/door";
 import { Wall } from "../entities/wall";
-import { Begar } from "../entities/begar";
-import { BlueBall } from "../entities/blue-ball";
-import { Vector3 } from "scrapy-engine";
 
-export class Room1 extends Room {
+export class Room2 extends Room {
+	
 	public begar:Begar;
 	public entrance:Door;
 	public exitDoor:Door;
 	public nextRoom:Room;
 	public nextRoomDoor:Door;
-
-	public exited(door:Door): void {
-		if (door == this.exitDoor) {
-			this.nextRoom.enterRoom(this.nextRoomDoor);
-		}else {
-			this.enterRoom(door);
-		}
-	}
 
 	public addEnemies(): void {
 		let enemy = new BlueBall(this.engine, new Vector3(200, 16));
@@ -93,9 +86,12 @@ export class Room1 extends Room {
 		this.entrance.transform.position.y= 64;
 		this.addDoor(this.entrance);
 
-		this.exitDoor = new Door(this.engine, Direction.LEFT);
-		this.exitDoor.transform.position.x = 256;
-		this.exitDoor.transform.position.y = 64;
+		this.exitDoor = new Door(this.engine, Direction.DOWN);
+		this.exitDoor.transform.position.x = 128;
+		this.exitDoor.transform.position.y = 128;
 		this.addDoor(this.exitDoor);
+	}
+
+	public exited(door: Door): void {
 	}
 }

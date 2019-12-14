@@ -122,7 +122,9 @@ export abstract class Room extends SimObject {
 
 			let touchingBegar = this.checkForTouchingBegar();
 			if (touchingBegar) {
-				touchingBegar.giveHealth(this.player);
+				if (touchingBegar.giveHealth(this.player)) {
+					this.begars.splice(this.begars.indexOf(touchingBegar), 1);
+				}
 			}
 		}
 

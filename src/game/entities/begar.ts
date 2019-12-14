@@ -27,16 +27,16 @@ export class Begar extends SimObject {
 		this.addChild(this.sprite);
 	}
 
-	public giveHealth(player:Player):void {
+	public giveHealth(player:Player):boolean {
 		if (this.need >= player.health) {
-			return;
+			return false;
 		}
 
-		player.doDamage(this.need);
 		eventBus.emit("score", this.need * 100);
-		this.need = 0;
-		
+		player.doDamage(this.need);
+
 		this.getParent().addChild(new BegarSatisfiedAnimation(this.engine, this.transform.position));
 		this.destroy();
+		return true;
 	}
 }

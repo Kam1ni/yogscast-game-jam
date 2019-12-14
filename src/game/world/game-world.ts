@@ -2,15 +2,19 @@ import { GameWorld, Color, Engine } from "scrapy-engine";
 import { Room1 } from "../rooms/room1";
 import { Player } from "../entities/player";
 import { Room } from "../entities/room";
+import { Room2 } from "../rooms/room2";
 
 export class MainWorld extends GameWorld{
 	public room1:Room1;
+	public room2:Room2;
 
 	public player:Player;
 	public ambientLight = new Color(50, 50, 100);
 
 	public constructor(engine:Engine) {
 		super(engine);
+		this.transform.position.x = 16;
+		this.transform.position.y = 16;
 		this.player = new Player(this.engine);
 		this.player.transform.position.x = 128;
 		this.player.transform.position.y = 64;
@@ -28,10 +32,12 @@ export class MainWorld extends GameWorld{
 		
 		console.log("STARTED");
 		this.room1 = new Room1(this.engine, this.player);
-		this.room1.transform.position.x = 64;
-		this.room1.transform.position.y = 64;
 		this.addChild(this.room1);
 		this.room1.enterRoom(this.room1.entrance);
+
+		this.room2 = new Room2(this.engine, this.player);
+		this.room1.nextRoom = this.room2;
+		this.room1.nextRoomDoor = this.room2.entrance;
 	}
 
 }
