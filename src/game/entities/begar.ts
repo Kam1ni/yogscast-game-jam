@@ -1,8 +1,10 @@
-import { SimObject, Engine, Rect, Color, BoundingBox, Vector3 } from "scrapy-engine";
+import { SimObject, Engine, Rect, Color, BoundingBox, Vector3, Sprite } from "scrapy-engine";
 import { Player } from "./player";
 import { eventBus } from "@/utils/event-bus";
 
 const SIZE = 16;
+
+const BEGAR_SKINS = ["honeydew", "xephos", "duncan", "sips", "sjin", "kim"];
 
 export class Begar extends SimObject {
 	public need:number = 1;
@@ -11,7 +13,8 @@ export class Begar extends SimObject {
 
 	public constructor(engine:Engine) {
 		super(engine);
-		this.sprite = new Rect(this.engine, SIZE, SIZE, Color.green());
+		let skin = BEGAR_SKINS[Math.floor(Math.random() * BEGAR_SKINS.length)];
+		this.sprite = new Sprite(this.engine, `${skin}.png`);
 		this.sprite.transform.position.x = -SIZE / 2;
 		this.sprite.transform.position.y = -SIZE / 2;
 
