@@ -7,6 +7,7 @@ import { Enemy } from "./enemy";
 import { Projectile } from "./projectile";
 import { Floor } from "../graphics/floor";
 import { Door } from "./door";
+import { Heart } from "./heart";
 
 export abstract class Room extends SimObject {
 	public background:Floor;
@@ -16,6 +17,7 @@ export abstract class Room extends SimObject {
 	public enemies:Enemy[] = [];
 	public projectiles:Projectile[] = [];
 	public doors:Door[] = [];
+	public hearts:Heart[] = [];
 	public cleared:boolean = false;
 	protected isStarted:boolean = false;
 	protected isStarting:boolean = false;
@@ -130,7 +132,8 @@ export abstract class Room extends SimObject {
 				this.cleared = true;
 			}
 		}
-		
+
+		this.checkForHeartCollisions();
 		this.correctEnemiesCollisions();
 		for (let enemy of this.enemies) {
 			this.correctForCollision(this.player, enemy.hitbox);
@@ -175,6 +178,11 @@ export abstract class Room extends SimObject {
 	public addDoor(door:Door):void {
 		this.doors.push(door);
 		this.addChild(door);
+	}
+
+	public addHeart(heart:Heart):void {
+		this.hearts.push(heart);
+		this.addChild(heart);
 	}
 
 	public addProjectile(projectile:Projectile):void {
@@ -288,6 +296,17 @@ export abstract class Room extends SimObject {
 					this.removeProjectile(projectile);
 					continue;
 				}
+			}
+		}
+	}
+
+	public checkForHeartCollisions():void {
+		for (let i = this.hearts.length - 1; i >= 0; i--) {
+			let heart = this.hearts[i];
+			if (this.player.hitbox.isTouching(heart.hitbox)) {
+				this.player.heal(1);
+				this.hearts.splice(i, 1);
+				heart.destroy();
 			}
 		}
 	}

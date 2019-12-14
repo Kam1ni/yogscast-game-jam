@@ -24,7 +24,6 @@ export class App extends React.Component{
 		cam.transform.scale.x = 3;
 		cam.transform.scale.y = 3;
 		cam.transform.scale.z = 3;
-		//this.engine.renderBoundingBoxes = true;
 		this.engine.start();
 	}
 }
