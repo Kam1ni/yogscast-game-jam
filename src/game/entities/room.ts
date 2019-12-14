@@ -6,6 +6,7 @@ import { Character } from "./character";
 import { Enemy } from "./enemy";
 import { Projectile } from "./projectile";
 import { Floor } from "../graphics/floor";
+import { Door } from "./door";
 
 export abstract class Room extends SimObject {
 	public background:Floor;
@@ -14,6 +15,7 @@ export abstract class Room extends SimObject {
 	public walls:Wall[] = [];
 	public enemies:Enemy[] = [];
 	public projectiles:Projectile[] = [];
+	public doors:Door[] = [];
 
 	public constructor(engine:Engine, player:Player) {
 		super(engine);
@@ -42,6 +44,7 @@ export abstract class Room extends SimObject {
 		}
 		this.correctForBegarCollision(this.player);
 		this.correctForWallCollision(this.player);
+		this.correctForDoorCollision(this.player);
 		this.checkForProjectileCollisions();
 	}
 
@@ -64,6 +67,11 @@ export abstract class Room extends SimObject {
 	public addEnemey(enemy:Enemy):void {
 		this.enemies.push(enemy);
 		this.addChild(enemy);
+	}
+
+	public addDoor(door:Door):void {
+		this.doors.push(door);
+		this.addChild(door);
 	}
 
 	public addProjectile(projectile:Projectile):void {
@@ -98,39 +106,7 @@ export abstract class Room extends SimObject {
 		let collision = char.hitbox.isTouching(staticBox);
 		if (!collision) return;
 
-		let xPoint = 0;
-		let yPoint = 0;
-		let staticXPoint = 0;
-		let staticYPoint = 0;
-
-		let minPont = char.hitbox.getMinPoint();
-		let maxPoint = char.hitbox.getMaxPoint();
-		let staticMinPoint = staticBox.getMinPoint();
-		let staticMaxPoint = staticBox.getMaxPoint();
-		let xDiff = 0;
-		let yDiff = 0;
-
-		if (collision.x > 0) {
-			xPoint = maxPoint.x;
-			staticXPoint = staticMinPoint.x;
-			xDiff = staticXPoint - xPoint;
-		}else {
-			xPoint = minPont.x;
-			staticXPoint = staticMaxPoint.x;
-			xDiff = xPoint - staticXPoint;
-		}
-
-		if (collision.y > 0) {
-			yPoint = maxPoint.y;
-			staticYPoint = staticMinPoint.y;
-			yDiff = staticYPoint - yPoint;
-		}else {
-			yPoint = minPont.y;
-			staticYPoint = staticMaxPoint.y;
-			yDiff = yPoint - staticYPoint;
-		}
-
-		if (Math.abs(yDiff) < Math.abs(xDiff)) {
+		if (Math.abs(collision.y) < Math.abs(collision.x)) {
 			char.transform.position.y -= collision.y;
 			if (collision.y > 0 && char.velocity.y > 0) {
 				char.velocity.y = 0;
@@ -154,6 +130,12 @@ export abstract class Room extends SimObject {
 		}
 	}
 
+	public correctForDoorCollision(char:Character):void {
+		for (let door of this.doors) {
+			this.correctForCollision(char, door.hitbox);
+		}
+	}
+
 	public correctForBegarCollision(char:Character):void {
 		for (let begar of this.begars) {
 			this.correctForCollision(char, begar.hitbox);
@@ -170,6 +152,7 @@ export abstract class Room extends SimObject {
 			}
 			this.correctForBegarCollision(enemy);
 			this.correctForWallCollision(enemy);
+			this.correctForDoorCollision(enemy);
 		}
 	}
 

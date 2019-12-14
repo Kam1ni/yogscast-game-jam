@@ -2,7 +2,7 @@ import { GameWorld, SimObject, Rect, Color, Engine, Vector2, Shader } from "scra
 import { Player } from "../entities/player";
 import { Begar } from "../entities/begar";
 import { Room } from "../entities/room";
-import { TestRoom } from "../entities/test-room";
+import { TestRoom } from "../rooms/test-room";
 
 export class TestWorld extends GameWorld {
 	public player:Player;

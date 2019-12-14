@@ -10,7 +10,7 @@
 	"author": "Kamil Krzysztof Kulach",
 	"license": "UNLICENSED",
 	"dependencies": {
-		"scrapy-engine": "0.0.14"
+		"scrapy-engine": "0.0.15"
 	},
 	"lint-staged": {
 		"src/**/*.ts": [

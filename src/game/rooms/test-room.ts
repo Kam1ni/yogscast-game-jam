@@ -1,13 +1,14 @@
-import { Room } from "./room";
+import { Room } from "../entities/room";
 import { Engine, Keys, BoundingBox } from "scrapy-engine";
-import { Player } from "./player";
-import { Begar } from "./begar";
+import { Player } from "../entities/player";
+import { Begar } from "../entities/begar";
 import { Direction } from "../utils/direction";
-import { Wall } from "./wall";
-import { Enemy } from "./enemy";
-import { BlueBall } from "./blue-ball";
-import { WallCorner } from "./wall-corner";
-import { Torch } from "./torch";
+import { Wall } from "../entities/wall";
+import { Enemy } from "../entities/enemy";
+import { BlueBall } from "../entities/blue-ball";
+import { WallCorner } from "../entities/wall-corner";
+import { Torch } from "../entities/torch";
+import { Door } from "../entities/door";
 
 
 export class TestRoom extends Room{
@@ -89,6 +90,11 @@ export class TestRoom extends Room{
 		torch.transform.position.x = 8;
 		torch.transform.position.y = 8;
 		this.addChild(torch);
+
+		let door = new Door(this.engine, Direction.RIGHT);
+		door.transform.position.x = 0;
+		door.transform.position.y= 64;
+		this.addDoor(door);
 	}
 
 }

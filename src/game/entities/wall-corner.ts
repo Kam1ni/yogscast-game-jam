@@ -4,7 +4,7 @@ import { Direction } from "../utils/direction";
 
 export class WallCorner extends AnimatedSprite{
 	public constructor(engine:Engine, x:number, y:number, direction:Direction) {
-		super(engine, "tiles.png", 4, 4);
+		super(engine, "tiles.png", 6, 4);
 		this.setRenderedLocation(1,1);
 
 		if (direction == Direction.UP) {

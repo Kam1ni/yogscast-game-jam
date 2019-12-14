@@ -13,7 +13,7 @@ export class Wall extends SimObject {
 
 		for (let i = 0; i < width; i++) {
 			for (let c = 0; c < height; c++) {
-				let sprite = new AnimatedSprite(this.engine, "tiles.png", 4, 4);
+				let sprite = new AnimatedSprite(this.engine, "tiles.png", 6, 4);
 				sprite.setRenderedLocation(0, 1);
 				sprite.transform.position.x = i * 16;
 				sprite.transform.position.y = c * 16;

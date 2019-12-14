@@ -13,7 +13,7 @@ export class BlueBall extends Enemy {
 		super(engine);
 		this.sprite = new BlueBallSprite(engine);
 		this.sprite.transform.position.x = -SIZE / 2;
-		this.sprite.transform.position.x = -SIZE / 2;
+		this.sprite.transform.position.y = -SIZE / 2;
 		this.addChild(this.sprite);
 	}
 
