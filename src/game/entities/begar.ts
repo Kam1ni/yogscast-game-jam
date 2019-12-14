@@ -1,6 +1,7 @@
 import { SimObject, Engine, Rect, Color, BoundingBox, Vector3, Sprite } from "scrapy-engine";
 import { Player } from "./player";
 import { eventBus } from "@/utils/event-bus";
+import { BegarSatisfiedAnimation } from "./begar-satisfied-animation";
 
 const SIZE = 16;
 
@@ -34,5 +35,8 @@ export class Begar extends SimObject {
 		player.doDamage(this.need);
 		eventBus.emit("score", this.need * 100);
 		this.need = 0;
+		
+		this.getParent().addChild(new BegarSatisfiedAnimation(this.engine, this.transform.position));
+		this.destroy();
 	}
 }

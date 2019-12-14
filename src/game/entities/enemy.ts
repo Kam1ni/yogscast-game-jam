@@ -18,7 +18,7 @@ export abstract class Enemy extends Character {
 
 	public kill():void {
 		this.getRoom().addChild(new DeathAnimation(this.engine, this.transform.position));
-		if (Math.random() < 0.2){
+		if (Math.random() < 0.2) {
 			this.getRoom().addHeart(new Heart(this.engine, this.transform.position));
 		}
 		this.getRoom().removeEnemy(this);

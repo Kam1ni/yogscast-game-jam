@@ -114,7 +114,7 @@ export class Player extends Character{
 		console.log("HEALING");
 		this.health += ammount;
 		if (this.health > this.maxHealth) {
-			console.log("SETTING MAX HEALTH")
+			console.log("SETTING MAX HEALTH");
 			this.health = this.maxHealth;
 		}
 		eventBus.emit("health", this.health);
