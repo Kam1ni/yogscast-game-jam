@@ -37,7 +37,9 @@ export class Player extends Character{
 	}
 
 	public update(dt:number):void {
-		let dtMilis = dt/1000.0;
+		if (!this.getRoom().getIsStarted()) {
+			return super.update(dt);
+		}
 		let targetX = 0;
 		let targetY = 0;
 

@@ -6,7 +6,7 @@ import { eventBus } from "@/utils/event-bus";
 const SIZE = 16;
 
 export abstract class Enemy extends Character {
-	protected maxSpeed:number = 64;
+	public maxSpeed:number = 64;
 	protected damagePerHit:number = 1;
 
 	public constructor(engine:Engine) {

@@ -2,7 +2,7 @@ import { SimObject, BoundingBox, Engine, Vector2 } from "scrapy-engine";
 import { Room } from "./room";
 
 export abstract class Character extends SimObject {
-	protected maxSpeed = 256;
+	public maxSpeed = 256;
 	protected acceleration = 0.5;
 	protected attackInterval = 1000;
 	protected lastAttackTime = new Date().getTime();

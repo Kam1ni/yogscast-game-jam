@@ -13,9 +13,9 @@ import { Door } from "../entities/door";
 
 export class TestRoom extends Room{
 	public begar:Begar;
-	public constructor(engine:Engine, player:Player) {
-		super(engine, player);
+	public entrance:Door;
 
+	public buildLevel():void {
 		this.begar = new Begar(this.engine);
 		this.begar.transform.position.x = 128;
 		this.begar.transform.position.y = 128 - 8;
@@ -46,47 +46,23 @@ export class TestRoom extends Room{
 		corner.transform.position.y = 128;
 		this.addChild(corner);
 
-		let enemy = new BlueBall(engine);
-		enemy.transform.position.x = 50;
-		enemy.transform.position.y = 16;
-		this.addEnemey(enemy);
 
-		enemy = new BlueBall(engine);
-		enemy.transform.position.x = 50;
-		enemy.transform.position.y = 50;
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(engine);
-		enemy.transform.position.x = 50;
-		enemy.transform.position.y = 100;
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(engine);
-		enemy.transform.position.x = 200;
-		enemy.transform.position.y = 50;
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(engine);
-		enemy.transform.position.x = 200;
-		enemy.transform.position.y = 100;
-		this.addEnemey(enemy);
-
-		let torch = new Torch(engine);
+		let torch = new Torch(this.engine);
 		torch.transform.position.x = 8;
 		torch.transform.position.y = 120;
 		this.addChild(torch);
 
-		torch = new Torch(engine);
+		torch = new Torch(this.engine);
 		torch.transform.position.x = 248;
 		torch.transform.position.y = 120;
 		this.addChild(torch);
 
-		torch = new Torch(engine);
+		torch = new Torch(this.engine);
 		torch.transform.position.x = 248;
 		torch.transform.position.y = 8;
 		this.addChild(torch);
 
-		torch = new Torch(engine);
+		torch = new Torch(this.engine);
 		torch.transform.position.x = 8;
 		torch.transform.position.y = 8;
 		this.addChild(torch);
@@ -95,6 +71,33 @@ export class TestRoom extends Room{
 		door.transform.position.x = 0;
 		door.transform.position.y= 64;
 		this.addDoor(door);
+		this.entrance = door;
 	}
 
+	public addEnemies(): void {
+		let enemy = new BlueBall(this.engine);
+		enemy.transform.position.x = 50;
+		enemy.transform.position.y = 16;
+		this.addEnemey(enemy);
+
+		enemy = new BlueBall(this.engine);
+		enemy.transform.position.x = 50;
+		enemy.transform.position.y = 50;
+		this.addEnemey(enemy);
+
+		enemy = new BlueBall(this.engine);
+		enemy.transform.position.x = 50;
+		enemy.transform.position.y = 100;
+		this.addEnemey(enemy);
+
+		enemy = new BlueBall(this.engine);
+		enemy.transform.position.x = 200;
+		enemy.transform.position.y = 50;
+		this.addEnemey(enemy);
+
+		enemy = new BlueBall(this.engine);
+		enemy.transform.position.x = 200;
+		enemy.transform.position.y = 100;
+		this.addEnemey(enemy);
+	}
 }
