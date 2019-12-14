@@ -76,7 +76,7 @@ export abstract class Room extends SimObject {
 		if (i != -1) {
 			this.projectiles.splice(i, 1);
 		}
-		this.removeChild(projectile);
+		projectile.destroy();
 	}
 
 	public removeEnemy(enemy:Enemy):void {
@@ -172,7 +172,8 @@ export abstract class Room extends SimObject {
 	}
 
 	public checkForProjectileCollisions():void {
-		for (let projectile of this.projectiles) {
+		for (let i = this.projectiles.length-1; i >= 0; i--) {
+			let projectile = this.projectiles[i];
 			if (this.player != projectile.sender) {
 				let collision = projectile.hitbox.isTouching(this.player.hitbox);
 				if (collision) {

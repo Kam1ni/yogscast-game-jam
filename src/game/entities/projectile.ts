@@ -1,4 +1,4 @@
-import { SimObject, Engine, BoundingBox, Rect, Color } from "scrapy-engine";
+import { SimObject, Engine, BoundingBox, Rect, Color, PointLight } from "scrapy-engine";
 import { Character } from "./character";
 import { Direction } from "../utils/direction";
 import { ProjectSprite } from "../graphics/projectile-sprite";
@@ -10,6 +10,7 @@ export class Projectile extends SimObject {
 	public direction:Direction;
 	public hitbox:BoundingBox;
 	public sprite:ProjectSprite;
+	private light:PointLight;
 
 	public constructor(engine:Engine, sender:Character, direction:Direction) {
 		super(engine);
@@ -22,6 +23,10 @@ export class Projectile extends SimObject {
 		this.hitbox.size.x = 10;
 		this.hitbox.size.y = 10;
 		this.addChild(this.hitbox);
+
+		this.light = new PointLight(this.engine);
+		this.light.color.alpha = 2550;
+		this.pointLights.push(this.light);
 	}
 
 	public update(dt:number):void {
@@ -35,6 +40,8 @@ export class Projectile extends SimObject {
 		} else {
 			this.transform.position.x += this.speed * dtMilis;
 		}
+
+		this.light.color.alpha = this.sprite.getRenderedLocation().x == 0 ? 2550 : 2000;
 		super.update(dt);
 	}
 }

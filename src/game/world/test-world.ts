@@ -7,6 +7,7 @@ import { TestRoom } from "../entities/test-room";
 export class TestWorld extends GameWorld {
 	public player:Player;
 	public room:Room;
+	public ambientLight = new Color(50, 50, 100);
 
 	public constructor(engine:Engine) {
 		super(engine);
@@ -20,7 +21,6 @@ export class TestWorld extends GameWorld {
 		this.room.transform.position.x = 64;
 		this.room.transform.position.y = 64;
 		this.addChild(this.room);
-
 	}
 
 }
