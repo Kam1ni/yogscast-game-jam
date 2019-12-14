@@ -1,22 +1,42 @@
 import { Room } from "../entities/room";
-import { Engine, Keys, BoundingBox, Vector3 } from "scrapy-engine";
-import { Player } from "../entities/player";
-import { Begar } from "../entities/begar";
+import { Door } from "../entities/door";
+import { Torch } from "../entities/torch";
+import { WallCorner } from "../entities/wall-corner";
 import { Direction } from "../utils/direction";
 import { Wall } from "../entities/wall";
-import { Enemy } from "../entities/enemy";
+import { Begar } from "../entities/begar";
 import { BlueBall } from "../entities/blue-ball";
-import { WallCorner } from "../entities/wall-corner";
-import { Torch } from "../entities/torch";
-import { Door } from "../entities/door";
+import { Vector3 } from "scrapy-engine";
 
-
-export class TestRoom extends Room{
-
+export class Room1 extends Room {
 	public begar:Begar;
 	public entrance:Door;
+	public exitDoor:Door;
+	public nextRoom:Room;
+	public nextRoomDoor:Door;
 
-	public buildLevel():void {
+	public exited(door:Door): void {
+		if (door == this.exitDoor) {
+			this.nextRoom.enterRoom(this.nextRoomDoor);
+		}else {
+			this.enterRoom(door);
+		}
+	}
+
+	public addEnemies(): void {
+		let enemy = new BlueBall(this.engine, new Vector3(200, 16));
+		this.addEnemey(enemy);
+
+		enemy = new BlueBall(this.engine, new Vector3(200, 50));
+		enemy.transform.position.x = 200;
+		enemy.transform.position.y = 50;
+		this.addEnemey(enemy);
+
+		enemy = new BlueBall(this.engine, new Vector3(200, 100));
+		this.addEnemey(enemy);
+	}
+
+	public buildLevel(): void {
 		this.begar = new Begar(this.engine);
 		this.begar.transform.position.x = 128;
 		this.begar.transform.position.y = 128 - 8;
@@ -73,28 +93,5 @@ export class TestRoom extends Room{
 		door.transform.position.y= 64;
 		this.addDoor(door);
 		this.entrance = door;
-	}
-
-	public addEnemies(): void {
-		let enemy = new BlueBall(this.engine, new Vector3(50, 16, 0));
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(this.engine, new Vector3(50, 50, 0));
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(this.engine, new Vector3(50, 100, 0));
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(this.engine, new Vector3(200, 50));
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(this.engine, new Vector3(200, 100));
-		enemy.transform.position.x = 200;
-		enemy.transform.position.y = 100;
-		this.addEnemey(enemy);
-	}
-
-	public exited(door: Door): void {
-		this.enterRoom(door);
 	}
 }

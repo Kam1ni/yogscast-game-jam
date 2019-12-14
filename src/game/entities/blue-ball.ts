@@ -1,24 +1,43 @@
 import { Enemy } from "./enemy";
-import { approach, Engine } from "scrapy-engine";
+import { approach, Engine, Vector3 } from "scrapy-engine";
 import { BlueBallSprite } from "../graphics/blue-ball-sprite";
 import { Direction } from "../utils/direction";
+import { DeathAnimation } from "./death-animation";
 
 const SIZE = 16;
 
 export class BlueBall extends Enemy {
 	public sprite:BlueBallSprite;
 	public direction:Direction = Direction.LEFT;
+	public spawned:boolean = false;
+	public spawnAnimation:DeathAnimation;
 
-	public constructor(engine:Engine) {
+	public constructor(engine:Engine, position:Vector3) {
 		super(engine);
-		this.sprite = new BlueBallSprite(engine);
-		this.sprite.transform.position.x = -SIZE / 2;
-		this.sprite.transform.position.y = -SIZE / 2;
-		this.addChild(this.sprite);
+		this.spawned = false;
+		this.transform.position = position;
+		this.spawnAnimation = new DeathAnimation(this.engine, new Vector3(0,0,1));
+		this.addChild(this.spawnAnimation);
 	}
 
+	private doSpawnAnimation(dt:number):void {
+		if (!this.sprite && this.spawnAnimation.getRenderedLocation().x == 2) {
+			this.sprite = new BlueBallSprite(this.engine);
+			this.sprite.transform.position.x = -SIZE / 2;
+			this.sprite.transform.position.y = -SIZE / 2;
+			this.addChild(this.sprite);
+		}
+		if (this.spawnAnimation.getParent() == null) {
+			this.spawned = true;
+		}
+	}
 
 	public update(dt:number):void {
+		if (!this.spawned) {
+			super.update(dt);
+			return this.doSpawnAnimation(dt);
+		}
+
 		let room = this.getRoom();
 		let player = room.player;
 
