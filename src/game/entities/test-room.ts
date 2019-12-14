@@ -7,6 +7,7 @@ import { Wall } from "./wall";
 import { Enemy } from "./enemy";
 import { BlueBall } from "./blue-ball";
 import { WallCorner } from "./wall-corner";
+import { Torch } from "./torch";
 
 
 export class TestRoom extends Room{
@@ -68,6 +69,26 @@ export class TestRoom extends Room{
 		enemy.transform.position.x = 200;
 		enemy.transform.position.y = 100;
 		this.addEnemey(enemy);
+
+		let torch = new Torch(engine);
+		torch.transform.position.x = 8;
+		torch.transform.position.y = 120;
+		this.addChild(torch);
+
+		torch = new Torch(engine);
+		torch.transform.position.x = 248;
+		torch.transform.position.y = 120;
+		this.addChild(torch);
+
+		torch = new Torch(engine);
+		torch.transform.position.x = 248;
+		torch.transform.position.y = 8;
+		this.addChild(torch);
+
+		torch = new Torch(engine);
+		torch.transform.position.x = 8;
+		torch.transform.position.y = 8;
+		this.addChild(torch);
 	}
 
 }

@@ -9,6 +9,7 @@ export class Wall extends SimObject {
 
 		this.transform.position.x = x;
 		this.transform.position.y = y;
+		this.transform.position.z = -4;
 
 		for (let i = 0; i < width; i++) {
 			for (let c = 0; c < height; c++) {
