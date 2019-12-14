@@ -1,21 +1,21 @@
 import { SimObject, Engine, BoundingBox, Rect, Color } from "scrapy-engine";
 import { Character } from "./character";
 import { Direction } from "../utils/direction";
+import { ProjectSprite } from "../graphics/projectile-sprite";
 
 export class Projectile extends SimObject {
-	protected speed = 512;
+	protected speed = 256;
 	public damage = 1;
 	public sender:Character;
 	public direction:Direction;
 	public hitbox:BoundingBox;
-	public sprite:SimObject;
+	public sprite:ProjectSprite;
 
-	public constructor(engine:Engine, sender:Character) {
+	public constructor(engine:Engine, sender:Character, direction:Direction) {
 		super(engine);
 		this.sender = sender;
-		this.sprite = new Rect(this.engine, 8, 8, Color.black());
-		this.sprite.transform.position.x = -5;
-		this.sprite.transform.position.y = -5;
+		this.direction = direction;
+		this.sprite = new ProjectSprite(this.engine, direction);
 		this.addChild(this.sprite);
 
 		this.hitbox = new BoundingBox(this.engine);

@@ -98,8 +98,7 @@ export class Player extends Character{
 	}
 
 	public attack():void {
-		let projectile = new Projectile(this.engine, this);
-		projectile.direction = this.lookingDirection;
+		let projectile = new Projectile(this.engine, this, this.lookingDirection);
 		this.getRoom().addProjectile(projectile);
 		super.attack();
 	}
