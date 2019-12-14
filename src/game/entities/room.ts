@@ -1,13 +1,14 @@
-import { SimObject, Engine, Color, Rect, Keys, BoundingBox } from "scrapy-engine";
+import { SimObject, Engine, Color, Rect, Keys, BoundingBox, Sprite, AnimatedSprite } from "scrapy-engine";
 import { Player } from "./player";
 import { Begar } from "./begar";
 import { Wall } from "./wall";
 import { Character } from "./character";
 import { Enemy } from "./enemy";
 import { Projectile } from "./projectile";
+import { Floor } from "../graphics/floor";
 
 export abstract class Room extends SimObject {
-	public background:SimObject;
+	public background:Floor;
 	public player:Player;
 	public begars:Begar[] = [];
 	public walls:Wall[] = [];
@@ -17,8 +18,7 @@ export abstract class Room extends SimObject {
 	public constructor(engine:Engine, player:Player) {
 		super(engine);
 		
-		this.background = new Rect(engine, 256, 128, Color.white());
-		this.background.transform.position.z = -5;
+		this.background = new Floor(engine, 16, 8);
 		this.addChild(this.background);
 
 		this.player = player;
