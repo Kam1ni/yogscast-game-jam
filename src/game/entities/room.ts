@@ -159,7 +159,13 @@ export abstract class Room extends SimObject {
 	}
 
 	public correctEnemiesCollisions():void {
-		for (let enemy of this.enemies) {
+		for (let i = 0; i < this.enemies.length; i++) {
+			let enemy = this.enemies[i];
+			if (i+1 < this.enemies.length) {
+				for (let c = i+1; c < this.enemies.length; c++) {
+					this.correctForCollision(enemy, this.enemies[c].hitbox);
+				}
+			}
 			this.correctForBegarCollision(enemy);
 			this.correctForWallCollision(enemy);
 		}

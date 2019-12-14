@@ -5,6 +5,7 @@ import { Begar } from "./begar";
 import { Direction } from "../utils/direction";
 import { Wall } from "./wall";
 import { Enemy } from "./enemy";
+import { BlueBall } from "./blue-ball";
 
 
 export class TestRoom extends Room{
@@ -22,27 +23,27 @@ export class TestRoom extends Room{
 		this.addWall(new Wall(this.engine, -16, 0, 16, 128));
 		this.addWall(new Wall(this.engine, 256, 0, 16, 128));
 
-		let enemy = new Enemy(engine);
+		let enemy = new BlueBall(engine);
 		enemy.transform.position.x = 50;
 		enemy.transform.position.y = 16;
 		this.addEnemey(enemy);
 
-		enemy = new Enemy(engine);
+		enemy = new BlueBall(engine);
 		enemy.transform.position.x = 50;
 		enemy.transform.position.y = 50;
 		this.addEnemey(enemy);
 
-		enemy = new Enemy(engine);
+		enemy = new BlueBall(engine);
 		enemy.transform.position.x = 50;
 		enemy.transform.position.y = 100;
 		this.addEnemey(enemy);
 
-		enemy = new Enemy(engine);
+		enemy = new BlueBall(engine);
 		enemy.transform.position.x = 200;
 		enemy.transform.position.y = 50;
 		this.addEnemey(enemy);
 
-		enemy = new Enemy(engine);
+		enemy = new BlueBall(engine);
 		enemy.transform.position.x = 200;
 		enemy.transform.position.y = 100;
 		this.addEnemey(enemy);
