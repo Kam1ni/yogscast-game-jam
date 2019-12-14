@@ -9,12 +9,13 @@ import { Door } from "../entities/door";
 import { Wall } from "../entities/wall";
 
 export class Room2 extends Room {
-	
 	public begar:Begar;
 	public entrance:Door;
 	public exitDoor:Door;
 	public nextRoom:Room;
 	public nextRoomDoor:Door;
+	public prevRoom:Room;
+	public prevRoomDoor:Door;
 
 	public addEnemies(): void {
 		let enemy = new BlueBall(this.engine, new Vector3(200, 16));
@@ -31,8 +32,8 @@ export class Room2 extends Room {
 
 	public buildLevel(): void {
 		this.begar = new Begar(this.engine);
-		this.begar.transform.position.x = 128;
-		this.begar.transform.position.y = 128 - 8;
+		this.begar.transform.position.x = 248;
+		this.begar.transform.position.y = 64;
 		this.addBegar(this.begar);
 
 		this.addWall(new Wall(this.engine, 0, 128, 16, 1, Direction.DOWN));
@@ -93,5 +94,10 @@ export class Room2 extends Room {
 	}
 
 	public exited(door: Door): void {
+		if (door == this.exitDoor) {
+			this.nextRoom.enterRoom(this.nextRoomDoor);
+		}else {
+			this.prevRoom.enterRoom(this.prevRoomDoor);
+		}
 	}
 }

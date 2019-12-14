@@ -31,6 +31,7 @@ export abstract class Room extends SimObject {
 		this.background = new Floor(engine, 18, 10);
 		this.background.transform.position.x -= 16;
 		this.background.transform.position.y -= 16;
+		this.transform.position.z = -100000;
 		this.addChild(this.background);
 
 		this.buildLevel();
@@ -46,6 +47,7 @@ export abstract class Room extends SimObject {
 		if (this.isStarted) {
 			return;
 		}
+		this.transform.position.z = 0;
 		this.entrance = entrance;
 		this.addChild(this.player);
 		entrance.open();
@@ -92,6 +94,7 @@ export abstract class Room extends SimObject {
 			this.player.remove();
 			this.exit.close();
 			this.exited(this.exit);
+			this.transform.position.z = -1000000;
 		}
 	}
 

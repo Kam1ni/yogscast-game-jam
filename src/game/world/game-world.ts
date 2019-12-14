@@ -32,12 +32,16 @@ export class MainWorld extends GameWorld{
 		
 		console.log("STARTED");
 		this.room1 = new Room1(this.engine, this.player);
-		this.addChild(this.room1);
-		this.room1.enterRoom(this.room1.entrance);
-
+		
 		this.room2 = new Room2(this.engine, this.player);
 		this.room1.nextRoom = this.room2;
 		this.room1.nextRoomDoor = this.room2.entrance;
-	}
+		this.room2.prevRoom = this.room1;
+		this.room2.prevRoomDoor = this.room1.exitDoor;
 
+
+		this.addChild(this.room1);
+		this.addChild(this.room2);
+		this.room1.enterRoom(this.room1.entrance);
+	}
 }
