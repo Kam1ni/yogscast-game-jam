@@ -12,7 +12,7 @@ export class Torch extends SimObject{
 
 		this.sprite = new TikiTorchSprite(this.engine);
 		this.sprite.transform.position.x = -8;
-		this.sprite.transform.position.y = -8;
+		this.sprite.transform.position.y = -6;
 		this.addChild(this.sprite);
 
 		this.light = new PointLight(this.engine);
