@@ -29,7 +29,7 @@ export abstract class Room extends SimObject {
 		if (this.engine.input.isKeyPressed(Keys.Space)) {
 			let touchingBegar = this.checkForTouchingBegar();
 			if (touchingBegar) {
-				console.log("IS TOUCHING");
+				touchingBegar.giveHealth(this.player);
 			}
 		}
 		

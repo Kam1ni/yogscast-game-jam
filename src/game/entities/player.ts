@@ -2,6 +2,7 @@ import { SimObject, Rect, Engine, Color, Vector3, Vector2, Keys, approach, Bound
 import { Direction } from "../utils/direction";
 import { Character } from "./character";
 import { Projectile } from "./projectile";
+import { eventBus } from "@/utils/event-bus";
 
 const SIZE = 32;
 const CHECK_HITBOX_SIZE = 32;
@@ -16,19 +17,22 @@ export class Player extends Character{
 
 	public constructor(engine:Engine) {
 		super(engine);
-		this.health = this.maxHealth;
 		this.sprite = new Rect(this.engine, SIZE, SIZE, Color.blue());
 		this.sprite.transform.position.x = -SIZE / 2;
 		this.sprite.transform.position.y = -SIZE / 2;
 		this.addChild(this.sprite);
-
+		
 		this.hitbox.size = new Vector3(SIZE, SIZE, 10);
 		this.hitbox.color = Color.red();
-
+		
 		this.checkHitbox = new BoundingBox(this.engine);
 		this.checkHitbox.size=  new Vector3(CHECK_HITBOX_SIZE, CHECK_HITBOX_SIZE, 10);
 		this.checkHitbox.color = Color.blue();
 		this.addChild(this.checkHitbox);
+		
+		this.health = this.maxHealth;
+		eventBus.emit("health", this.health);
+		eventBus.emit("max-health", this.maxHealth);
 	}
 
 	public update(dt:number):void {
@@ -91,6 +95,11 @@ export class Player extends Character{
 		projectile.direction = this.lookingDirection;
 		this.getRoom().addProjectile(projectile);
 		super.attack();
+	}
+
+	public doDamage(damage:number):void {
+		super.doDamage(damage);
+		eventBus.emit("health", this.health);
 	}
 
 	public kill():void {

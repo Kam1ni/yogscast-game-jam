@@ -7,7 +7,7 @@ export abstract class Character extends SimObject {
 	protected attackInterval = 1000;
 	protected lastAttackTime = new Date().getTime();
 	protected maxHealth = 1;
-	protected health = 1;
+	public health = 1;
 
 	public hitbox:BoundingBox;
 	public velocity:Vector2 = new Vector2();

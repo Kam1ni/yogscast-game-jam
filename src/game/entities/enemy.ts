@@ -1,6 +1,7 @@
 import { SimObject, Engine, Rect, Color, Vector3, Vector2, approach } from "scrapy-engine";
 import { Character } from "./character";
 import { Room } from "./room";
+import { eventBus } from "@/utils/event-bus";
 
 const SIZE = 32;
 
@@ -62,6 +63,7 @@ export class Enemy extends Character {
 
 	public kill():void {
 		let room = this.getRoom().removeEnemy(this);
+		eventBus.emit("score", this.maxHealth * 10);
 		super.destroy();
 	}
 }

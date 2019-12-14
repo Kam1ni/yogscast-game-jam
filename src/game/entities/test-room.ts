@@ -24,6 +24,24 @@ export class TestRoom extends Room{
 
 		let enemy = new Enemy(engine);
 		this.addEnemey(enemy);
+
+		enemy = new Enemy(engine);
+		enemy.transform.position.y = 100;
+		this.addEnemey(enemy);
+
+		enemy = new Enemy(engine);
+		enemy.transform.position.y = 200;
+		this.addEnemey(enemy);
+
+		enemy = new Enemy(engine);
+		enemy.transform.position.x = 400;
+		enemy.transform.position.y = 100;
+		this.addEnemey(enemy);
+
+		enemy = new Enemy(engine);
+		enemy.transform.position.x = 400;
+		enemy.transform.position.y = 200;
+		this.addEnemey(enemy);
 	}
 
 }

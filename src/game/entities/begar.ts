@@ -1,9 +1,11 @@
 import { SimObject, Engine, Rect, Color, BoundingBox, Vector3 } from "scrapy-engine";
+import { Player } from "./player";
+import { eventBus } from "@/utils/event-bus";
 
 const SIZE = 32;
 
 export class Begar extends SimObject {
-	public isSatisfied:boolean = false;
+	public need:number = 1;
 	public sprite:SimObject;
 	public hitbox:BoundingBox;
 
@@ -19,5 +21,15 @@ export class Begar extends SimObject {
 		this.addChild(this.hitbox);
 
 		this.addChild(this.sprite);
+	}
+
+	public giveHealth(player:Player):void {
+		if (this.need >= player.health) {
+			return;
+		}
+
+		player.doDamage(this.need);
+		eventBus.emit("score", this.need * 100);
+		this.need = 0;
 	}
 }
