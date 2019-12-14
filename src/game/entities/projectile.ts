@@ -25,7 +25,7 @@ export class Projectile extends SimObject {
 		this.addChild(this.hitbox);
 
 		this.light = new PointLight(this.engine);
-		this.light.color.alpha = 2550;
+		this.light.color.alpha = 255;
 		this.pointLights.push(this.light);
 	}
 

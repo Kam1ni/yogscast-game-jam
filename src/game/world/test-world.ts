@@ -1,4 +1,4 @@
-import { GameWorld, SimObject, Rect, Color, Engine, Vector2 } from "scrapy-engine";
+import { GameWorld, SimObject, Rect, Color, Engine, Vector2, Shader } from "scrapy-engine";
 import { Player } from "../entities/player";
 import { Begar } from "../entities/begar";
 import { Room } from "../entities/room";
