@@ -3,7 +3,7 @@ import { Character } from "./character";
 import { Direction } from "../utils/direction";
 
 export class Projectile extends SimObject {
-	protected speed = 256;
+	protected speed = 512;
 	public damage = 1;
 	public sender:Character;
 	public direction:Direction;
