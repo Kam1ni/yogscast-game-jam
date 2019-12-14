@@ -12,6 +12,7 @@ import { Door } from "../entities/door";
 
 
 export class TestRoom extends Room{
+
 	public begar:Begar;
 	public entrance:Door;
 
@@ -99,5 +100,9 @@ export class TestRoom extends Room{
 		enemy.transform.position.x = 200;
 		enemy.transform.position.y = 100;
 		this.addEnemey(enemy);
+	}
+
+	public exited(door: Door): void {
+		this.enterRoom(door);
 	}
 }

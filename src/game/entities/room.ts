@@ -1,4 +1,4 @@
-import { SimObject, Engine, Color, Rect, Keys, BoundingBox, Sprite, AnimatedSprite, approach } from "scrapy-engine";
+import { SimObject, Engine, Color, Rect, Keys, BoundingBox, Sprite, AnimatedSprite, approach, Vector3 } from "scrapy-engine";
 import { Player } from "./player";
 import { Begar } from "./begar";
 import { Wall } from "./wall";
@@ -16,9 +16,12 @@ export abstract class Room extends SimObject {
 	public enemies:Enemy[] = [];
 	public projectiles:Projectile[] = [];
 	public doors:Door[] = [];
+	public cleared:boolean = false;
 	protected isStarted:boolean = false;
 	protected isStarting:boolean = false;
+	protected isEnding:boolean = false;
 	protected entrance:Door;
+	protected exit:Door;
 
 	public constructor(engine:Engine, player:Player) {
 		super(engine);
@@ -31,17 +34,18 @@ export abstract class Room extends SimObject {
 		this.buildLevel();
 
 		this.player = player;
-		this.addChild(player);
 	}
 
 	public abstract buildLevel():void;
 	public abstract addEnemies():void;
+	public abstract exited(door:Door):void;
 
-	public start(entrance:Door):void {
+	public enterRoom(entrance:Door):void {
 		if (this.isStarted) {
 			return;
 		}
 		this.entrance = entrance;
+		this.addChild(this.player);
 		entrance.open();
 		this.isStarting = true;
 		let doorPos = entrance.transform.position;
@@ -49,6 +53,7 @@ export abstract class Room extends SimObject {
 		this.player.transform.position = doorPos.add(offset);
 		this.player.lookingDirection = entrance.direction;
 		this.player.sprite.playWalkAnimation(this.player.lookingDirection);
+		this.player.velocity = new Vector3();
 	}
 
 	private doStartSequence(dt:number):void {
@@ -62,15 +67,46 @@ export abstract class Room extends SimObject {
 		if (this.player.transform.position.x == target.x && this.player.transform.position.y == target.y) {
 			this.isStarted = true;
 			this.isStarting = false;
-			this.addEnemies();
+			if (!this.cleared) {
+				this.addEnemies();
+			}
 			this.player.sprite.idle();
 			this.entrance.close();
 		}
 	}
 
+	private doEndSequence(dt:number):void {
+		let doorPos = this.exit.transform.position;
+		let offset = this.exit.getSpawnPointBeginOffset();
+		let target = doorPos.add(offset);
+		this.player.transform.position.x = approach(this.player.transform.position.x, target.x, dt / 30);
+		this.player.transform.position.y = approach(this.player.transform.position.y, target.y, dt / 30);
+		this.player.sprite.playWalkAnimation(this.player.lookingDirection);
+
+		if (this.player.transform.position.x == target.x && this.player.transform.position.y == target.y) {
+			this.isStarted = false;
+			this.isStarting = false;
+			this.isEnding = false;
+			this.player.remove();
+			this.exit.close();
+			this.exited(this.exit);
+		}
+	}
+
+	public exitRoom(exit:Door):void {
+		this.exit = exit;
+		this.isEnding = true;
+		this.isStarted = false;
+		this.player.velocity = new Vector3();
+	}
+
+
 	public update(dt:number):void {
 		if (this.isStarting) {
 			this.doStartSequence(dt);
+		}
+		if (this.isEnding) {
+			this.doEndSequence(dt);
 		}
 		super.update(dt);
 		if (!this.isStarted) return;
@@ -78,7 +114,8 @@ export abstract class Room extends SimObject {
 		if (this.engine.input.isKeyPressed(Keys.Space)) {
 			let touchingDoor = this.checkForTouchingOpenDoor();
 			if (touchingDoor) {
-				console.log("IS TOUCHING DOOR");
+				this.exitRoom(touchingDoor);
+				return;
 			}
 
 			let touchingBegar = this.checkForTouchingBegar();

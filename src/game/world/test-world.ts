@@ -22,7 +22,7 @@ export class TestWorld extends GameWorld {
 		this.room.transform.position.x = 64;
 		this.room.transform.position.y = 64;
 		this.addChild(this.room);
-		room.start(room.entrance);
+		room.enterRoom(room.entrance);
 	}
 
 }
