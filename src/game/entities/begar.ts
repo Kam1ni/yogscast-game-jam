@@ -2,7 +2,7 @@ import { SimObject, Engine, Rect, Color, BoundingBox, Vector3 } from "scrapy-eng
 import { Player } from "./player";
 import { eventBus } from "@/utils/event-bus";
 
-const SIZE = 32;
+const SIZE = 16;
 
 export class Begar extends SimObject {
 	public need:number = 1;

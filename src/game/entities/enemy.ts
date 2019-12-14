@@ -3,11 +3,11 @@ import { Character } from "./character";
 import { Room } from "./room";
 import { eventBus } from "@/utils/event-bus";
 
-const SIZE = 32;
+const SIZE = 16;
 
 export class Enemy extends Character {
 	public sprite:SimObject;
-	protected maxSpeed:number = 128;
+	protected maxSpeed:number = 64;
 	protected damagePerHit:number = 1;
 
 	public constructor(engine:Engine) {
@@ -29,7 +29,7 @@ export class Enemy extends Character {
 
 		let magnitude = Math.sqrt(xDiff * xDiff + yDiff * yDiff);
 
-		if (magnitude < 56) {
+		if (magnitude < 24) {
 			xDiff = 0;
 			yDiff = 0;
 			this.attack();
@@ -62,7 +62,7 @@ export class Enemy extends Character {
 	}
 
 	public kill():void {
-		let room = this.getRoom().removeEnemy(this);
+		this.getRoom().removeEnemy(this);
 		eventBus.emit("score", this.maxHealth * 10);
 		super.destroy();
 	}

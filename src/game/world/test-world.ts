@@ -11,12 +11,14 @@ export class TestWorld extends GameWorld {
 	public constructor(engine:Engine) {
 		super(engine);
 		this.player = new Player(this.engine);
-		this.player.transform.position.x = 256;
-		this.player.transform.position.y = 128;
+		this.player.transform.position.x = 128;
+		this.player.transform.position.y = 64;
+
+		this.engine.assetLoaders.textureLoader.getAsset("player.png");
 
 		this.room = new TestRoom(this.engine, this.player);
-		this.room.transform.position.x = 128;
-		this.room.transform.position.y = 128;
+		this.room.transform.position.x = 64;
+		this.room.transform.position.y = 64;
 		this.addChild(this.room);
 
 	}

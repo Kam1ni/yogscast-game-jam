@@ -3,13 +3,14 @@ import { Direction } from "../utils/direction";
 import { Character } from "./character";
 import { Projectile } from "./projectile";
 import { eventBus } from "@/utils/event-bus";
+import { PlayerSprite } from "../graphics/player-sprite";
 
-const SIZE = 32;
-const CHECK_HITBOX_SIZE = 32;
+const SIZE = 16;
+const CHECK_HITBOX_SIZE = 16;
 
 
 export class Player extends Character{	
-	public sprite:SimObject;
+	public sprite:PlayerSprite;
 	public lookingDirection:Direction = Direction.RIGHT;
 	public checkHitbox:BoundingBox;
 	public attackInterval:number = 250;
@@ -17,7 +18,7 @@ export class Player extends Character{
 
 	public constructor(engine:Engine) {
 		super(engine);
-		this.sprite = new Rect(this.engine, SIZE, SIZE, Color.blue());
+		this.sprite = new PlayerSprite(this.engine);
 		this.sprite.transform.position.x = -SIZE / 2;
 		this.sprite.transform.position.y = -SIZE / 2;
 		this.addChild(this.sprite);
@@ -58,6 +59,12 @@ export class Player extends Character{
 			this.lookingDirection = Direction.LEFT;
 		}else {
 			targetX = 0;
+		}
+
+		if (targetX != 0 || targetY != 0) {
+			this.sprite.playWalkAnimation(this.lookingDirection);
+		}else {
+			this.sprite.idle();
 		}
 
 		if (this.engine.input.isKeyPressed(Keys.Space)) {

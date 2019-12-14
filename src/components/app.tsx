@@ -20,7 +20,11 @@ export class App extends React.Component{
 		this.engine = new Engine(document.getElementById("game-canvas") as HTMLCanvasElement);
 		this.engine.init();
 		this.engine.setWorld(new TestWorld(this.engine));
-		this.engine.renderBoundingBoxes = true;
+		let cam = this.engine.getCamera();
+		cam.transform.scale.x = 3;
+		cam.transform.scale.y = 3;
+		cam.transform.scale.z = 3;
+	//	this.engine.renderBoundingBoxes = true;
 		this.engine.start();
 	}
 }

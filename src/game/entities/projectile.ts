@@ -3,7 +3,7 @@ import { Character } from "./character";
 import { Direction } from "../utils/direction";
 
 export class Projectile extends SimObject {
-	protected speed = 512;
+	protected speed = 256;
 	public damage = 1;
 	public sender:Character;
 	public direction:Direction;
@@ -13,7 +13,7 @@ export class Projectile extends SimObject {
 	public constructor(engine:Engine, sender:Character) {
 		super(engine);
 		this.sender = sender;
-		this.sprite = new Rect(this.engine, 10, 10, Color.black());
+		this.sprite = new Rect(this.engine, 8, 8, Color.black());
 		this.sprite.transform.position.x = -5;
 		this.sprite.transform.position.y = -5;
 		this.addChild(this.sprite);

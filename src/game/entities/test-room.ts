@@ -13,34 +13,38 @@ export class TestRoom extends Room{
 		super(engine, player);
 
 		this.begar = new Begar(this.engine);
-		this.begar.transform.position.x = 256;
-		this.begar.transform.position.y = 256 - 16;
+		this.begar.transform.position.x = 128;
+		this.begar.transform.position.y = 128 - 8;
 		this.addBegar(this.begar);
 
-		this.addWall(new Wall(this.engine, 0, 256, 512, 32));
-		this.addWall(new Wall(this.engine, 0, -32, 512, 32));
-		this.addWall(new Wall(this.engine, -32, 0, 32, 256));
-		this.addWall(new Wall(this.engine, 512, 0, 32, 256));
+		this.addWall(new Wall(this.engine, 0, 128, 256, 16));
+		this.addWall(new Wall(this.engine, 0, -16, 256, 16));
+		this.addWall(new Wall(this.engine, -16, 0, 16, 128));
+		this.addWall(new Wall(this.engine, 256, 0, 16, 128));
 
 		let enemy = new Enemy(engine);
+		enemy.transform.position.x = 50;
+		enemy.transform.position.y = 16;
 		this.addEnemey(enemy);
 
 		enemy = new Enemy(engine);
+		enemy.transform.position.x = 50;
+		enemy.transform.position.y = 50;
+		this.addEnemey(enemy);
+
+		enemy = new Enemy(engine);
+		enemy.transform.position.x = 50;
 		enemy.transform.position.y = 100;
 		this.addEnemey(enemy);
 
 		enemy = new Enemy(engine);
-		enemy.transform.position.y = 200;
+		enemy.transform.position.x = 200;
+		enemy.transform.position.y = 50;
 		this.addEnemey(enemy);
 
 		enemy = new Enemy(engine);
-		enemy.transform.position.x = 400;
+		enemy.transform.position.x = 200;
 		enemy.transform.position.y = 100;
-		this.addEnemey(enemy);
-
-		enemy = new Enemy(engine);
-		enemy.transform.position.x = 400;
-		enemy.transform.position.y = 200;
 		this.addEnemey(enemy);
 	}
 
