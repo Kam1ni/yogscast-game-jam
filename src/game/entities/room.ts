@@ -127,6 +127,7 @@ export abstract class Room extends SimObject {
 		if (this.enemies.length == 0) {
 			for (let door of this.doors) {
 				door.open();
+				this.cleared = true;
 			}
 		}
 		

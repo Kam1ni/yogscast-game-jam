@@ -1,6 +1,6 @@
 import { AnimatedSprite, Engine } from "scrapy-engine";
 
-const ANIMATION_INTERVAL = 50;
+const ANIMATION_INTERVAL = 75;
 
 export class TikiTorchSprite extends AnimatedSprite{
 	private lastAnimationChangeState = new Date().getTime();

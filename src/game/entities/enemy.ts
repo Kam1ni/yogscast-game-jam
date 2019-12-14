@@ -2,6 +2,7 @@ import { SimObject, Engine, Rect, Color, Vector3, Vector2, approach } from "scra
 import { Character } from "./character";
 import { Room } from "./room";
 import { eventBus } from "@/utils/event-bus";
+import { DeathAnimation } from "./death-animation";
 
 const SIZE = 16;
 
@@ -15,6 +16,7 @@ export abstract class Enemy extends Character {
 	}
 
 	public kill():void {
+		this.getRoom().addChild(new DeathAnimation(this.engine, this.transform.position));
 		this.getRoom().removeEnemy(this);
 		eventBus.emit("score", this.maxHealth * 10);
 		super.destroy();
