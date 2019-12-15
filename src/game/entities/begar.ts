@@ -1,4 +1,4 @@
-import { SimObject, Engine, Rect, Color, BoundingBox, Vector3, Sprite } from "scrapy-engine";
+import { SimObject, Engine, Rect, Color, BoundingBox, Vector3, Sprite, Audio } from "scrapy-engine";
 import { Player } from "./player";
 import { eventBus } from "@/utils/event-bus";
 import { BegarSatisfiedAnimation } from "./begar-satisfied-animation";
@@ -11,6 +11,7 @@ export class Begar extends SimObject {
 	public need:number = 1;
 	public sprite:SimObject;
 	public hitbox:BoundingBox;
+	public freeSound:Audio;
 
 	public constructor(engine:Engine) {
 		super(engine);
@@ -23,6 +24,8 @@ export class Begar extends SimObject {
 		this.hitbox.size = new Vector3(SIZE, SIZE, 10);
 		this.hitbox.color = Color.red();
 		this.addChild(this.hitbox);
+
+		this.freeSound = this.engine.assetLoaders.audioLoader.getAsset("freed.wav");
 
 		this.addChild(this.sprite);
 	}
@@ -37,6 +40,9 @@ export class Begar extends SimObject {
 
 		this.getParent().addChild(new BegarSatisfiedAnimation(this.engine, this.transform.position));
 		this.destroy();
+
+		this.freeSound.play();
+
 		return true;
 	}
 }

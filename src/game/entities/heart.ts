@@ -1,7 +1,8 @@
-import { Sprite, Engine, Vector3, BoundingBox, Color } from "scrapy-engine";
+import { Sprite, Engine, Vector3, BoundingBox, Color, Audio } from "scrapy-engine";
 
 export class Heart extends Sprite {
 	public hitbox:BoundingBox;
+	public soundEfect:Audio;
 
 	public constructor(engine:Engine, position:Vector3) {
 		super(engine, "heart.png");
@@ -13,5 +14,7 @@ export class Heart extends Sprite {
 		this.hitbox.transform.position.y = 4;
 		this.hitbox.color = Color.red();
 		this.addChild(this.hitbox);
+
+		this.soundEfect = engine.assetLoaders.audioLoader.getAsset("health.wav");
 	}
 }

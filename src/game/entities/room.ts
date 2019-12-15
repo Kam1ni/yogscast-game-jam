@@ -52,6 +52,8 @@ export abstract class Room extends SimObject {
 		this.addChild(this.player);
 		entrance.open();
 		this.isStarting = true;
+		let player = entrance.enterSound.play();
+		player.volume = 0.3;
 		let doorPos = entrance.transform.position;
 		let offset = entrance.getSpawnPointBeginOffset();
 		this.player.transform.position = doorPos.add(offset);
@@ -64,8 +66,8 @@ export abstract class Room extends SimObject {
 		let doorPos = this.entrance.transform.position;
 		let offset = this.entrance.getSpawnPointOffset();
 		let target = doorPos.add(offset);
-		this.player.transform.position.x = approach(this.player.transform.position.x, target.x, dt / 30);
-		this.player.transform.position.y = approach(this.player.transform.position.y, target.y, dt / 30);
+		this.player.transform.position.x = approach(this.player.transform.position.x, target.x, dt / 50);
+		this.player.transform.position.y = approach(this.player.transform.position.y, target.y, dt / 50);
 		this.player.sprite.playWalkAnimation(this.player.lookingDirection);
 
 		if (this.player.transform.position.x == target.x && this.player.transform.position.y == target.y) {
@@ -83,8 +85,8 @@ export abstract class Room extends SimObject {
 		let doorPos = this.exit.transform.position;
 		let offset = this.exit.getSpawnPointBeginOffset();
 		let target = doorPos.add(offset);
-		this.player.transform.position.x = approach(this.player.transform.position.x, target.x, dt / 30);
-		this.player.transform.position.y = approach(this.player.transform.position.y, target.y, dt / 30);
+		this.player.transform.position.x = approach(this.player.transform.position.x, target.x, dt / 50);
+		this.player.transform.position.y = approach(this.player.transform.position.y, target.y, dt / 50);
 		this.player.sprite.playWalkAnimation(this.player.lookingDirection);
 
 		if (this.player.transform.position.x == target.x && this.player.transform.position.y == target.y) {
@@ -93,12 +95,14 @@ export abstract class Room extends SimObject {
 			this.isEnding = false;
 			this.player.remove();
 			this.exit.close();
-			this.exited(this.exit);
 			this.transform.position.z = -1000000;
+			this.exited(this.exit);
 		}
 	}
 
 	public exitRoom(exit:Door):void {
+		let player = exit.exitSound.play();
+		player.volume = 0.3;
 		this.exit = exit;
 		this.isEnding = true;
 		this.isStarted = false;
@@ -311,6 +315,7 @@ export abstract class Room extends SimObject {
 			if (this.player.hitbox.isTouching(heart.hitbox)) {
 				this.player.heal(1);
 				this.hearts.splice(i, 1);
+				heart.soundEfect.play();
 				heart.destroy();
 			}
 		}

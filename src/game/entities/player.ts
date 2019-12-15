@@ -1,4 +1,4 @@
-import { SimObject, Rect, Engine, Color, Vector3, Vector2, Keys, approach, BoundingBox } from "scrapy-engine";
+import { SimObject, Rect, Engine, Color, Vector3, Vector2, Keys, approach, BoundingBox, Audio } from "scrapy-engine";
 import { Direction } from "../utils/direction";
 import { Character } from "./character";
 import { Projectile } from "./projectile";
@@ -16,6 +16,8 @@ export class Player extends Character{
 	public attackInterval:number = 250;
 	protected maxHealth = 5;
 
+	public fireballSound:Audio;
+
 	public constructor(engine:Engine) {
 		super(engine);
 		this.sprite = new PlayerSprite(this.engine);
@@ -31,6 +33,8 @@ export class Player extends Character{
 		this.checkHitbox.color = Color.blue();
 		this.addChild(this.checkHitbox);
 		
+		this.fireballSound = this.engine.assetLoaders.audioLoader.getAsset("fireball.wav");
+
 		this.health = this.maxHealth;
 		eventBus.emit("health", this.health);
 		eventBus.emit("max-health", this.maxHealth);
@@ -102,6 +106,8 @@ export class Player extends Character{
 	public attack():void {
 		let projectile = new Projectile(this.engine, this, this.lookingDirection);
 		this.getRoom().addProjectile(projectile);
+		let player = this.fireballSound.play();
+		player.volume = 0.5;
 		super.attack();
 	}
 

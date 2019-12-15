@@ -1,5 +1,5 @@
 import { Enemy } from "./enemy";
-import { approach, Engine, Vector3 } from "scrapy-engine";
+import { approach, Engine, Vector3, Audio } from "scrapy-engine";
 import { BlueBallSprite } from "../graphics/blue-ball-sprite";
 import { Direction } from "../utils/direction";
 import { DeathAnimation } from "./death-animation";
@@ -11,12 +11,14 @@ export class BlueBall extends Enemy {
 	public direction:Direction = Direction.LEFT;
 	public spawned:boolean = false;
 	public spawnAnimation:DeathAnimation;
+	public deathSound:Audio;
 
 	public constructor(engine:Engine, position:Vector3) {
 		super(engine);
 		this.spawned = false;
 		this.transform.position = position;
 		this.spawnAnimation = new DeathAnimation(this.engine, new Vector3(0,0,1));
+		this.deathSound = this.engine.assetLoaders.audioLoader.getAsset("blue-ball-dead.wav");
 		this.addChild(this.spawnAnimation);
 	}
 
@@ -81,6 +83,10 @@ export class BlueBall extends Enemy {
 		super.update(dt);
 	}
 
+	public kill():void {
+		super.kill();
+		this.deathSound.play();
+	}
 
 	public attack():void {
 		if (!this.canAttack()) return;

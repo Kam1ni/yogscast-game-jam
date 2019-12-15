@@ -1,4 +1,4 @@
-import { SimObject, BoundingBox, Engine, Vector2 } from "scrapy-engine";
+import { SimObject, BoundingBox, Engine, Vector2, Audio } from "scrapy-engine";
 import { Room } from "./room";
 
 export abstract class Character extends SimObject {
@@ -12,10 +12,13 @@ export abstract class Character extends SimObject {
 	public hitbox:BoundingBox;
 	public velocity:Vector2 = new Vector2();
 
+	public damageSound:Audio;
+
 	public constructor(engine:Engine) {
 		super(engine);
 		this.health = this.maxHealth;
 		this.hitbox = new BoundingBox(this.engine);
+		this.damageSound = this.engine.assetLoaders.audioLoader.getAsset("damage-taken.wav");
 		this.addChild(this.hitbox);
 	}
 
@@ -46,6 +49,7 @@ export abstract class Character extends SimObject {
 
 	public doDamage(damage:number):void {
 		this.health -= damage;
+		this.damageSound.play();
 		if (this.health <= 0) {
 			this.health = 0;
 			this.kill();

@@ -1,4 +1,4 @@
-import { SimObject, Engine, BoundingBox, Color, Matrix4x4, Vector3 } from "scrapy-engine";
+import { SimObject, Engine, BoundingBox, Color, Matrix4x4, Vector3, Audio } from "scrapy-engine";
 import { DoorSprite } from "../graphics/door-sprite";
 import { Direction } from "../utils/direction";
 
@@ -7,6 +7,8 @@ export class Door extends SimObject {
 	public hitbox:BoundingBox;
 	public entranceHitbox:BoundingBox;
 	public direction:Direction;
+	public enterSound:Audio;
+	public exitSound:Audio;
 	private isOpen:boolean;
 	
 
@@ -30,6 +32,9 @@ export class Door extends SimObject {
 			this.hitbox.size.x = 32;
 			this.hitbox.size.y = 64;
 		}
+
+		this.enterSound = engine.assetLoaders.audioLoader.getAsset("door-enter.wav");
+		this.exitSound = engine.assetLoaders.audioLoader.getAsset("door-exit.wav");
 		this.addChild(this.hitbox);
 	}
 

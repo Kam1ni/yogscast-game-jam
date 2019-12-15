@@ -29,6 +29,11 @@ export class MainWorld extends GameWorld{
 		await this.engine.assetLoaders.textureLoader.getLoadedAsset("blue-ball.png");
 		await this.engine.assetLoaders.textureLoader.getLoadedAsset("heart.png");
 		await this.engine.assetLoaders.textureLoader.getLoadedAsset("fireball.png");
+		await this.engine.assetLoaders.audioLoader.getLoadedAsset("door-enter.wav");
+		await this.engine.assetLoaders.audioLoader.getLoadedAsset("damage-taken.wav");
+		await this.engine.assetLoaders.audioLoader.getLoadedAsset("freed.wav");
+		await this.engine.assetLoaders.audioLoader.getLoadedAsset("health.wav");
+		await this.engine.assetLoaders.audioLoader.getLoadedAsset("blue-ball-dead.wav");
 		
 		console.log("STARTED");
 		this.room1 = new Room1(this.engine, this.player);
