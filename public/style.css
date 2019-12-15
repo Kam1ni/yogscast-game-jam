@@ -144,3 +144,12 @@ canvas {
 	right: 0;
 	bottom: 0;
 }
+
+.heart{
+	width: 64px;
+	image-rendering: pixelated;
+}
+
+button:active{
+	outline: none;
+}

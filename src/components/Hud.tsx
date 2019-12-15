@@ -15,7 +15,7 @@ export class Hud extends React.Component<HudProps> {
 		super(props);
 
 		this.state = {
-			health:0,
+			health:5,
 			maxHealth:0,
 			score:0,
 			endText:"",
@@ -24,11 +24,16 @@ export class Hud extends React.Component<HudProps> {
 	}
 
 	public onBack():void {
-		this.setState({...this.state, endText:"", score:0, savedBegars:[]});
+		this.setState({...this.state, endText:"", score:0, savedBegars:[], health:5});
 		this.props.onBack();
 	}
 
 	public render():JSX.Element {
+		let hearts = [] as JSX.Element[];
+		for (let i = 0; i < this.state.health; i++) {
+			hearts.push(<img className="heart" src="./assets/textures/heart.png" key={i}/>);
+		}
+
 		if (this.state.endText != "") {
 			return <div className="screen game-over">
 				<h1>{this.state.endText}</h1>
@@ -40,7 +45,9 @@ export class Hud extends React.Component<HudProps> {
 
 		return (
 			<div className="hud">
-				<h1 className="health">{this.state.health}/{this.state.maxHealth}</h1>
+				<div className="health">
+					{hearts}
+				</div>
 				<div className="spacer"></div>
 				<h1 className="score">Score: {this.state.score}</h1>
 			</div>
