@@ -13,7 +13,6 @@ html, body, #game-container, .canvas-container {
 * {
 	font-family: 'Press Start 2P', cursive;
 	color: white;
-	font-smooth: never;
 	background-color: transparent;
 }
 
@@ -104,6 +103,10 @@ canvas {
 	max-width: 500px;
 }
 
+.credits{
+	justify-content: start;
+}
+
 .credits>.content {
 	animation-name: credits-animation;
 	animation-duration: 45s;
@@ -113,10 +116,11 @@ canvas {
 
 @keyframes credits-animation{
 	from {
-		transform: translate(0, 150vh);
+		transform: translate(0, 100vh);
 	}
 	to {
-		transform: translate(0, -200vh);
+		transform: translate(0, 100vh);
+		transform: translate(0, -100%);
 	}
 }
 

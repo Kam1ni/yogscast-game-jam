@@ -1,7 +1,6 @@
 import { GameWorld, Color, Engine } from "scrapy-engine";
 import { Room1 } from "../rooms/room1";
 import { Player } from "../entities/player";
-import { Room } from "../entities/room";
 import { Room2 } from "../rooms/room2";
 import { Room3 } from "../rooms/room3";
 import { Room4 } from "../rooms/room4";
@@ -45,7 +44,7 @@ export class MainWorld extends GameWorld{
 
 	public stop():void {
 		let children = this.getChildren();
-		for (let i = children.length - 1; i >= 0; i--){
+		for (let i = children.length - 1; i >= 0; i--) {
 			children[i].remove();
 		}
 	}
