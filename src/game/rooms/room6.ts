@@ -34,7 +34,7 @@ export class Room6 extends Room{
 	public buildLevel(): void {
 		this.begar = new Begar(this.engine, "sjin");
 		this.begar.transform.position.x = 248;
-		this.begar.transform.position.y = 64;
+		this.begar.transform.position.y = 88;
 		this.addBegar(this.begar);
 
 		this.addWall(new Wall(this.engine, 0, 128, 16, 1, Direction.DOWN));
@@ -85,7 +85,24 @@ export class Room6 extends Room{
 		this.exitDoor.transform.position.y = 64;
 		this.addDoor(this.exitDoor);
 
+		let x = 256-64;
+		let y = 96;
+		this.addWall(new Wall(this.engine, x - 16, y-32, 5, 1, Direction.UP));
+		this.addWall(new Wall(this.engine, x - 16, y-48, 5, 1, Direction.DOWN));
+		this.addWall(new WallCornerOuter(this.engine, x - 32, y-32, Direction.UP));
+		this.addWall(new WallCornerOuter(this.engine, x - 32, y-48, Direction.RIGHT));
 
+		x = 128 - 96;
+		y = 0;
+		let height = 4;
+		this.addWall(new WallCorner(this.engine, x + 16, y - 16, Direction.RIGHT));
+		this.addWall(new WallCorner(this.engine, x + 32, y - 16, Direction.UP));
+		
+		this.addWall(new Wall(this.engine, x + 16, y, 1, height, Direction.RIGHT));
+		this.addWall(new Wall(this.engine, x + 32, y, 1, height, Direction.LEFT));
+		
+		this.addWall(new WallCornerOuter(this.engine, x + 16, y + 16 * height, Direction.UP));
+		this.addWall(new WallCornerOuter(this.engine, x + 32, y + 16 * height, Direction.LEFT));
 
 	}
 
