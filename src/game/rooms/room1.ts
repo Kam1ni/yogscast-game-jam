@@ -7,6 +7,7 @@ import { Wall } from "../entities/wall";
 import { Begar } from "../entities/begar";
 import { BlueBall } from "../entities/blue-ball";
 import { Vector3 } from "scrapy-engine";
+import { WallCornerOuter } from "../entities/wall-corner outer";
 
 export class Room1 extends Room {
 	public begar:Begar;
@@ -47,25 +48,17 @@ export class Room1 extends Room {
 		this.addWall(new Wall(this.engine, -16, 0, 1, 8, Direction.LEFT));
 		this.addWall(new Wall(this.engine, 256, 0, 1, 8, Direction.RIGHT));
 
-		let corner = new WallCorner(this.engine, 0, 0, Direction.UP);
-		corner.transform.position.x = 0;
-		corner.transform.position.y = 0;
-		this.addChild(corner);
+		let corner = new WallCorner(this.engine, -16, -16, Direction.UP);
+		this.addWall(corner);
 
-		corner = new WallCorner(this.engine, 0, 0, Direction.DOWN);
-		corner.transform.position.x = 256;
-		corner.transform.position.y = 128;
-		this.addChild(corner);
+		corner = new WallCorner(this.engine, 256, 128, Direction.DOWN);
+		this.addWall(corner);
 
-		corner = new WallCorner(this.engine, 0, 0, Direction.RIGHT);
-		corner.transform.position.x = 256;
-		corner.transform.position.y = 0;
-		this.addChild(corner);
+		corner = new WallCorner(this.engine, 256, -16, Direction.RIGHT);
+		this.addWall(corner);
 
-		corner = new WallCorner(this.engine, 0, 0, Direction.LEFT);
-		corner.transform.position.x = 0;
-		corner.transform.position.y = 128;
-		this.addChild(corner);
+		corner = new WallCorner(this.engine, -16, 128, Direction.LEFT);
+		this.addWall(corner);
 
 
 		let torch = new Torch(this.engine);
@@ -97,5 +90,24 @@ export class Room1 extends Room {
 		this.exitDoor.transform.position.x = 256;
 		this.exitDoor.transform.position.y = 64;
 		this.addDoor(this.exitDoor);
+
+		
+		this.addWall(new WallCorner(this.engine, 64 + 16, 128, Direction.DOWN));
+		this.addWall(new WallCorner(this.engine, 64 + 32, 128, Direction.LEFT));
+
+		this.addWall(new Wall(this.engine, 64 + 16, 128 - 32, 1, 2, Direction.RIGHT));
+		this.addWall(new Wall(this.engine, 64 + 32, 128 - 32, 1, 2, Direction.LEFT));
+
+		this.addWall(new WallCornerOuter(this.engine, 64 + 16, 128-48, Direction.RIGHT));
+		this.addWall(new WallCornerOuter(this.engine, 64 + 32, 128-48, Direction.DOWN));
+
+		this.addWall(new WallCorner(this.engine, 128 + 16, -16, Direction.RIGHT));
+		this.addWall(new WallCorner(this.engine, 128 + 32, -16, Direction.UP));
+		
+		this.addWall(new Wall(this.engine, 128 + 16, 0, 1, 2, Direction.RIGHT));
+		this.addWall(new Wall(this.engine, 128 + 32, 0, 1, 2, Direction.LEFT));
+		
+		this.addWall(new WallCornerOuter(this.engine, 128 + 16, 32, Direction.UP));
+		this.addWall(new WallCornerOuter(this.engine, 128 + 32, 32, Direction.LEFT));
 	}
 }

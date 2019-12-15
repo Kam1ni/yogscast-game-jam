@@ -3,6 +3,7 @@ import { Direction } from "../utils/direction";
 
 export class Wall extends SimObject {
 	public hitbox:BoundingBox;
+	protected sprites:AnimatedSprite[] = [];
 
 	public constructor(engine:Engine, x:number, y:number, width:number, height:number, direction:Direction) {
 		super(engine);
@@ -29,6 +30,7 @@ export class Wall extends SimObject {
 					sprite.transform.position.y += 16;
 				}
 				this.addChild(sprite);
+				this.sprites.push(sprite);
 			}
 		}
 

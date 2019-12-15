@@ -7,6 +7,7 @@ import { Begar } from "../entities/begar";
 import { BlueBall } from "../entities/blue-ball";
 import { Vector3 } from "scrapy-engine";
 import { Door } from "../entities/door";
+import { WallCornerOuter } from "../entities/wall-corner outer";
 
 export class Room6 extends Room{
 	public begar:Begar;
@@ -41,26 +42,18 @@ export class Room6 extends Room{
 		this.addWall(new Wall(this.engine, -16, 0, 1, 8, Direction.LEFT));
 		this.addWall(new Wall(this.engine, 256, 0, 1, 8, Direction.RIGHT));
 
-		let corner = new WallCorner(this.engine, 0, 0, Direction.UP);
-		corner.transform.position.x = 0;
-		corner.transform.position.y = 0;
-		this.addChild(corner);
+	
+		let corner = new WallCorner(this.engine, -16, -16, Direction.UP);
+		this.addWall(corner);
 
-		corner = new WallCorner(this.engine, 0, 0, Direction.DOWN);
-		corner.transform.position.x = 256;
-		corner.transform.position.y = 128;
-		this.addChild(corner);
+		corner = new WallCorner(this.engine, 256, 128, Direction.DOWN);
+		this.addWall(corner);
 
-		corner = new WallCorner(this.engine, 0, 0, Direction.RIGHT);
-		corner.transform.position.x = 256;
-		corner.transform.position.y = 0;
-		this.addChild(corner);
+		corner = new WallCorner(this.engine, 256, -16, Direction.RIGHT);
+		this.addWall(corner);
 
-		corner = new WallCorner(this.engine, 0, 0, Direction.LEFT);
-		corner.transform.position.x = 0;
-		corner.transform.position.y = 128;
-		this.addChild(corner);
-
+		corner = new WallCorner(this.engine, -16, 128, Direction.LEFT);
+		this.addWall(corner);
 
 		let torch = new Torch(this.engine);
 		torch.transform.position.x = 8;
@@ -91,6 +84,9 @@ export class Room6 extends Room{
 		this.exitDoor.transform.position.x = 0;
 		this.exitDoor.transform.position.y = 64;
 		this.addDoor(this.exitDoor);
+
+
+
 	}
 
 	public exited(door: Door): void {
