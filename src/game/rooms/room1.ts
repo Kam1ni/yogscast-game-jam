@@ -37,7 +37,7 @@ export class Room1 extends Room {
 	}
 
 	public buildLevel(): void {
-		this.begar = new Begar(this.engine);
+		this.begar = new Begar(this.engine, "honeydew");
 		this.begar.transform.position.x = 128;
 		this.begar.transform.position.y = 128 - 8;
 		this.addBegar(this.begar);

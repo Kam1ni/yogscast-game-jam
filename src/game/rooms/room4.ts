@@ -1,25 +1,39 @@
 import { Room } from "../entities/room";
-import { Engine, Keys, BoundingBox, Vector3 } from "scrapy-engine";
-import { Player } from "../entities/player";
-import { Begar } from "../entities/begar";
-import { Direction } from "../utils/direction";
-import { Wall } from "../entities/wall";
-import { Enemy } from "../entities/enemy";
-import { BlueBall } from "../entities/blue-ball";
-import { WallCorner } from "../entities/wall-corner";
 import { Torch } from "../entities/torch";
+import { Direction } from "../utils/direction";
+import { WallCorner } from "../entities/wall-corner";
+import { Wall } from "../entities/wall";
+import { Begar } from "../entities/begar";
+import { BlueBall } from "../entities/blue-ball";
+import { Vector3 } from "scrapy-engine";
 import { Door } from "../entities/door";
 
-
-export class TestRoom extends Room{
-
+export class Room4 extends Room{
 	public begar:Begar;
 	public entrance:Door;
+	public exitDoor:Door;
+	public nextRoom:Room;
+	public nextRoomDoor:Door;
+	public prevRoom:Room;
+	public prevRoomDoor:Door;
 
-	public buildLevel():void {
-		this.begar = new Begar(this.engine, "honeydew");
-		this.begar.transform.position.x = 128;
-		this.begar.transform.position.y = 128 - 8;
+	public addEnemies(): void {
+		let enemy = new BlueBall(this.engine, new Vector3(200, 16));
+		this.addEnemey(enemy);
+
+		enemy = new BlueBall(this.engine, new Vector3(200, 50));
+		enemy.transform.position.x = 200;
+		enemy.transform.position.y = 50;
+		this.addEnemey(enemy);
+
+		enemy = new BlueBall(this.engine, new Vector3(200, 100));
+		this.addEnemey(enemy);
+	}
+
+	public buildLevel(): void {
+		this.begar = new Begar(this.engine, "kim");
+		this.begar.transform.position.x = 248;
+		this.begar.transform.position.y = 64;
 		this.addBegar(this.begar);
 
 		this.addWall(new Wall(this.engine, 0, 128, 16, 1, Direction.DOWN));
@@ -68,33 +82,22 @@ export class TestRoom extends Room{
 		torch.transform.position.y = 8;
 		this.addChild(torch);
 
-		let door = new Door(this.engine, Direction.RIGHT);
-		door.transform.position.x = 0;
-		door.transform.position.y= 64;
-		this.addDoor(door);
-		this.entrance = door;
-	}
+		this.entrance = new Door(this.engine, Direction.LEFT);
+		this.entrance.transform.position.x = 256;
+		this.entrance.transform.position.y= 64;
+		this.addDoor(this.entrance);
 
-	public addEnemies(): void {
-		let enemy = new BlueBall(this.engine, new Vector3(50, 16, 0));
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(this.engine, new Vector3(50, 50, 0));
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(this.engine, new Vector3(50, 100, 0));
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(this.engine, new Vector3(200, 50));
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(this.engine, new Vector3(200, 100));
-		enemy.transform.position.x = 200;
-		enemy.transform.position.y = 100;
-		this.addEnemey(enemy);
+		this.exitDoor = new Door(this.engine, Direction.RIGHT);
+		this.exitDoor.transform.position.x = 0;
+		this.exitDoor.transform.position.y = 64;
+		this.addDoor(this.exitDoor);
 	}
 
 	public exited(door: Door): void {
-		this.enterRoom(door);
+		if (door == this.exitDoor) {
+			this.nextRoom.enterRoom(this.nextRoomDoor);
+		}else {
+			this.prevRoom.enterRoom(this.prevRoomDoor);
+		}
 	}
 }

@@ -5,17 +5,18 @@ import { BegarSatisfiedAnimation } from "./begar-satisfied-animation";
 
 const SIZE = 16;
 
-const BEGAR_SKINS = ["honeydew", "xephos", "duncan", "sips", "sjin", "kim"];
+export type BegarSkin = "honeydew"| "xephos"| "duncan"| "sips"| "sjin"| "kim";
 
 export class Begar extends SimObject {
 	public need:number = 1;
 	public sprite:SimObject;
 	public hitbox:BoundingBox;
 	public freeSound:Audio;
+	public skin:BegarSkin;
 
-	public constructor(engine:Engine) {
+	public constructor(engine:Engine, skin:BegarSkin) {
 		super(engine);
-		let skin = BEGAR_SKINS[Math.floor(Math.random() * BEGAR_SKINS.length)];
+		this.skin = skin;
 		this.sprite = new Sprite(this.engine, `${skin}.png`);
 		this.sprite.transform.position.x = -SIZE / 2;
 		this.sprite.transform.position.y = -SIZE / 2;

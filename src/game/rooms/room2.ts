@@ -31,7 +31,7 @@ export class Room2 extends Room {
 	}
 
 	public buildLevel(): void {
-		this.begar = new Begar(this.engine);
+		this.begar = new Begar(this.engine, "xephos");
 		this.begar.transform.position.x = 248;
 		this.begar.transform.position.y = 64;
 		this.addBegar(this.begar);
