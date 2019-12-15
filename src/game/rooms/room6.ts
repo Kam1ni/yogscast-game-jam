@@ -8,13 +8,12 @@ import { BlueBall } from "../entities/blue-ball";
 import { Vector3 } from "scrapy-engine";
 import { Door } from "../entities/door";
 import { WallCornerOuter } from "../entities/wall-corner outer";
+import { eventBus } from "@/utils/event-bus";
 
 export class Room6 extends Room{
 	public begar:Begar;
 	public entrance:Door;
 	public exitDoor:Door;
-	public nextRoom:Room;
-	public nextRoomDoor:Door;
 	public prevRoom:Room;
 	public prevRoomDoor:Door;
 
@@ -104,7 +103,7 @@ export class Room6 extends Room{
 
 	public exited(door: Door): void {
 		if (door == this.exitDoor) {
-			this.nextRoom.enterRoom(this.nextRoomDoor);
+			eventBus.emit("victory");
 		}else {
 			this.prevRoom.enterRoom(this.prevRoomDoor);
 		}

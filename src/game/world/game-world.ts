@@ -43,6 +43,13 @@ export class MainWorld extends GameWorld{
 		}
 	}
 
+	public stop():void {
+		let children = this.getChildren();
+		for (let i = children.length - 1; i >= 0; i--){
+			children[i].remove();
+		}
+	}
+
 	public start():void {
 		this.player = new Player(this.engine);
 		this.player.transform.position.x = 128;

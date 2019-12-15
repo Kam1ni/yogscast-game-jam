@@ -1,23 +1,47 @@
 import React from "react";
 import { eventBus } from "@/utils/event-bus";
+import { BegarSkin } from "@/game/entities/begar";
+import { SavedBegars } from "./saved-begars";
 
-export class Hud extends React.Component {
-	public state:{health:number, maxHealth:number, score:number};
+type HudProps = {
+	onGameOver:Function;
+	onBack:Function;
+};
 
-	public constructor(props:any) {
+export class Hud extends React.Component<HudProps> {
+	public state:{health:number, maxHealth:number, score:number, endText:string, savedBegars:BegarSkin[]};
+
+	public constructor(props:HudProps) {
 		super(props);
 
 		this.state = {
 			health:0,
 			maxHealth:0,
-			score:0
+			score:0,
+			endText:"",
+			savedBegars:[]
 		};
 	}
 
+	public onBack():void {
+		this.setState({...this.state, endText:"", score:0, savedBegars:[]});
+		this.props.onBack();
+	}
+
 	public render():JSX.Element {
+		if (this.state.endText != "") {
+			return <div className="screen game-over">
+				<h1>{this.state.endText}</h1>
+				<SavedBegars savedBegars={this.state.savedBegars}/>
+				<h2 className="score">SCORE: {this.state.score}</h2>
+				<button onClick={()=>this.onBack()}>Main Menu</button>
+			</div>;
+		}
+
 		return (
 			<div className="hud">
 				<h1 className="health">{this.state.health}/{this.state.maxHealth}</h1>
+				<div className="spacer"></div>
 				<h1 className="score">Score: {this.state.score}</h1>
 			</div>
 		);
@@ -34,6 +58,30 @@ export class Hud extends React.Component {
 
 		eventBus.on("score", (toAddScore:number)=> {
 			this.setState({...this.state, score:this.state.score + toAddScore});
+		});
+
+		eventBus.on("game-over", ()=> {
+			if (this.state.savedBegars.length == 6) {
+				this.setState({...this.state, endText:"You saved everyone. But at wath cost?"});
+			}else {
+				this.setState({...this.state, endText:"Game Over"});
+			}
+			this.props.onGameOver();
+		});
+
+		eventBus.on("victory", ()=> {
+			if (this.state.savedBegars.length == 0) {
+				this.setState({...this.state, endText:"Why haven't you saved anyone?"});
+			}else if (this.state.savedBegars.length != 6) {
+				this.setState({...this.state, endText:"You missed a few. But these will have to do."});
+			}else {
+				this.setState({...this.state, endText:"Victory"});
+			}
+			this.props.onGameOver();
+		});
+
+		eventBus.on("begar-saved", (skin:BegarSkin) => {
+			this.setState({...this.state, savedBegars:[...this.state.savedBegars, skin]});
 		});
 	}
 }

@@ -4,8 +4,10 @@ import {Hud} from "./hud";
 import { MainWorld } from "@/game/world/game-world";
 import { Menu } from "./Menu";
 import { Credits } from "./credits";
+import { Intro } from "./intro";
+import { eventBus } from "@/utils/event-bus";
 
-type Screen = "menu" | "game" | "credits";
+type Screen = "menu" | "game" | "credits" | "intro";
 
 export class App extends React.Component{
 	private engine:Engine;
@@ -26,16 +28,20 @@ export class App extends React.Component{
 	public render():JSX.Element {
 		let extraItems = [] as JSX.Element[];
 		if (this.state.screen == "menu") {
-			extraItems.push(<Menu key="menu" loaded={this.state.loaded} onCredits={()=>this.setScreen("credits")} onStart={()=>this.setScreen("game")}/>);
+			extraItems.push(<Menu key="menu" loaded={this.state.loaded} onCredits={()=>this.setScreen("credits")} onStart={()=>this.setScreen("intro")}/>);
 		}
 		if (this.state.screen == "credits") {
 			extraItems.push(<Credits exit={()=>this.setScreen("menu")} key="credits"/>);
 		}
 
+		if (this.state.screen == "intro") {
+			extraItems.push(<Intro key="intro" onNext={()=>this.setScreen("game")} />);
+		}
+
 		return (
 			<div className="canvas-container">
 				{extraItems}
-				<Hud/>
+				<Hud onGameOver={()=>this.mainWorld.stop()} onBack={()=>this.setScreen("menu")}/>
 				<canvas id="game-canvas"></canvas>
 			</div>
 		);

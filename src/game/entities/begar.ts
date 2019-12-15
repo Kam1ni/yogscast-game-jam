@@ -36,14 +36,15 @@ export class Begar extends SimObject {
 			return false;
 		}
 
-		eventBus.emit("score", this.need * 100);
-		player.doDamage(this.need);
-
+		eventBus.emit("begar-saved", this.skin);
+		
 		this.getParent().addChild(new BegarSatisfiedAnimation(this.engine, this.transform.position));
 		this.destroy();
-
+		
 		this.freeSound.play();
-
+		
+		eventBus.emit("score", this.need * 100);
+		player.doDamage(this.need);
 		return true;
 	}
 }

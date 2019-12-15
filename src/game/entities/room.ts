@@ -117,6 +117,9 @@ export abstract class Room extends SimObject {
 		if (this.isEnding) {
 			this.doEndSequence(dt);
 		}
+		if (this.player.health == 0) {
+			return;
+		}
 		super.update(dt);
 		if (!this.isStarted) return;
 

@@ -12,6 +12,9 @@ html, body, #game-container, .canvas-container {
 
 * {
 	font-family: 'Press Start 2P', cursive;
+	color: white;
+	font-smooth: never;
+	background-color: transparent;
 }
 
 .canvas-container{
@@ -38,6 +41,11 @@ html, body, #game-container, .canvas-container {
 	align-items: center;
 }
 
+.menu .icon {
+	height: 200px;
+	image-rendering: pixelated;
+}
+
 button {
 	background:none;
 	border:none;
@@ -53,6 +61,8 @@ canvas {
 
 .hud {
 	position: absolute;
+	display: flex;
+	flex-direction: row;
 	top:0;
 	left:0;
 	height: 100vh;
@@ -60,6 +70,73 @@ canvas {
 	z-index: 1;
 }
 
+.spacer{
+	flex-grow: 1;
+}
+
 .health, .score{
 	color:white;
+}
+
+.game-over, .intro, .credits{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;;
+}
+
+.game-over > * {
+	display: inline;
+	margin: 50px;
+	text-align: center;
+}
+
+.game-over button{
+	font-size: 1.5em;
+}
+
+.begar {
+	width: 75px;
+	image-rendering: pixelated;
+}
+
+.intro>* {
+	max-width: 500px;
+}
+
+.credits>.content {
+	animation-name: credits-animation;
+	animation-duration: 45s;
+	animation-timing-function: linear;
+	animation-iteration-count: infinite;
+}
+
+@keyframes credits-animation{
+	from {
+		transform: translate(0, 150vh);
+	}
+	to {
+		transform: translate(0, -200vh);
+	}
+}
+
+.credits>.content>*{
+	margin: 50px;
+	max-width: 500px;
+}
+
+.credit * {
+	text-align: center;
+	margin: 15px;
+}
+
+.credit > .content>.what{
+	font-size: 1.2em;
+
+}
+
+.credits button{
+	position:fixed;
+	right: 0;
+	bottom: 0;
 }

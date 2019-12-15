@@ -44,6 +44,11 @@ export class Player extends Character{
 		if (!this.getRoom().getIsStarted()) {
 			return super.update(dt);
 		}
+
+		if (this.health == 0) {
+			return super.update(0);
+		}
+
 		let targetX = 0;
 		let targetY = 0;
 
@@ -127,6 +132,9 @@ export class Player extends Character{
 	}
 
 	public kill():void {
-		console.log("GAME OVER");
+		this.health = 0;
+		setTimeout(()=> {
+			eventBus.emit("game-over");
+		}, 1000);
 	}
 }
