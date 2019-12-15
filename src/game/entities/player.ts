@@ -14,6 +14,8 @@ export class Player extends Character{
 	public lookingDirection:Direction = Direction.RIGHT;
 	public checkHitbox:BoundingBox;
 	public attackInterval:number = 250;
+	public maxSpeed = 128;
+	public acceleration = 1;
 	protected maxHealth = 5;
 
 	public fireballSound:Audio;
