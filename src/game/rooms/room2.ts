@@ -19,16 +19,11 @@ export class Room2 extends Room {
 	public prevRoomDoor:Door;
 
 	public addEnemies(): void {
-		let enemy = new BlueBall(this.engine, new Vector3(200, 16));
-		this.addEnemey(enemy);
+		this.addEnemy(new BlueBall(this.engine, new Vector3(150, 16)));
+		this.addEnemy(new BlueBall(this.engine, new Vector3(150, 50)));
 
-		enemy = new BlueBall(this.engine, new Vector3(200, 50));
-		enemy.transform.position.x = 200;
-		enemy.transform.position.y = 50;
-		this.addEnemey(enemy);
-
-		enemy = new BlueBall(this.engine, new Vector3(200, 100));
-		this.addEnemey(enemy);
+		this.addEnemy(new BlueBall(this.engine, new Vector3(150, 100)));
+		this.addEnemy(new BlueBall(this.engine, new Vector3(230, 16)));
 	}
 
 	public buildLevel(): void {

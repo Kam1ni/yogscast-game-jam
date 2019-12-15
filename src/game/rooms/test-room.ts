@@ -77,21 +77,21 @@ export class TestRoom extends Room{
 
 	public addEnemies(): void {
 		let enemy = new BlueBall(this.engine, new Vector3(50, 16, 0));
-		this.addEnemey(enemy);
+		this.addEnemy(enemy);
 
 		enemy = new BlueBall(this.engine, new Vector3(50, 50, 0));
-		this.addEnemey(enemy);
+		this.addEnemy(enemy);
 
 		enemy = new BlueBall(this.engine, new Vector3(50, 100, 0));
-		this.addEnemey(enemy);
+		this.addEnemy(enemy);
 
 		enemy = new BlueBall(this.engine, new Vector3(200, 50));
-		this.addEnemey(enemy);
+		this.addEnemy(enemy);
 
 		enemy = new BlueBall(this.engine, new Vector3(200, 100));
 		enemy.transform.position.x = 200;
 		enemy.transform.position.y = 100;
-		this.addEnemey(enemy);
+		this.addEnemy(enemy);
 	}
 
 	public exited(door: Door): void {

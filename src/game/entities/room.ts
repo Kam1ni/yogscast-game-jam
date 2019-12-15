@@ -179,7 +179,7 @@ export abstract class Room extends SimObject {
 		this.addChild(begar);
 	}
 
-	public addEnemey(enemy:Enemy):void {
+	public addEnemy(enemy:Enemy):void {
 		this.enemies.push(enemy);
 		this.addChild(enemy);
 	}

@@ -84,6 +84,6 @@ export class MainWorld extends GameWorld{
 		this.addChild(this.room4);
 		this.addChild(this.room5);
 		this.addChild(this.room6);
-		this.room6.enterRoom(this.room6.entrance);
+		this.room1.enterRoom(this.room1.entrance);
 	}
 }
