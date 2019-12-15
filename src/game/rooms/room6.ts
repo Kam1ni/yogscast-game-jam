@@ -85,6 +85,8 @@ export class Room6 extends Room{
 		this.addWall(new Wall(this.engine, x - 16, y-48, 5, 1, Direction.DOWN));
 		this.addWall(new WallCornerOuter(this.engine, x - 32, y-32, Direction.UP));
 		this.addWall(new WallCornerOuter(this.engine, x - 32, y-48, Direction.RIGHT));
+		this.addWall(new WallCorner(this.engine, 256, 64, Direction.RIGHT));
+		this.addWall(new WallCorner(this.engine, 256, 48, Direction.DOWN));
 
 		x = 128 - 96;
 		y = 0;
