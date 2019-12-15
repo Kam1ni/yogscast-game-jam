@@ -7,6 +7,7 @@ import { Begar } from "../entities/begar";
 import { BlueBall } from "../entities/blue-ball";
 import { Vector3 } from "scrapy-engine";
 import { Door } from "../entities/door";
+import { WallCornerOuter } from "../entities/wall-corner outer";
 
 export class Room3 extends Room{
 	public begar:Begar;
@@ -32,8 +33,8 @@ export class Room3 extends Room{
 
 	public buildLevel(): void {
 		this.begar = new Begar(this.engine, "duncan");
-		this.begar.transform.position.x = 248;
-		this.begar.transform.position.y = 64;
+		this.begar.transform.position.x = 232;
+		this.begar.transform.position.y = 8;
 		this.addBegar(this.begar);
 
 		this.addWall(new Wall(this.engine, 0, 128, 16, 1, Direction.DOWN));
@@ -84,6 +85,29 @@ export class Room3 extends Room{
 		this.exitDoor.transform.position.x = 0;
 		this.exitDoor.transform.position.y = 64;
 		this.addDoor(this.exitDoor);
+
+		let x = 128 - 80;
+		let y = 0;
+		let height = 4;
+		this.addWall(new WallCorner(this.engine, x + 16, y - 16, Direction.RIGHT));
+		this.addWall(new WallCorner(this.engine, x + 32, y - 16, Direction.UP));
+		
+		this.addWall(new Wall(this.engine, x + 16, y, 1, height, Direction.RIGHT));
+		this.addWall(new Wall(this.engine, x + 32, y, 1, height, Direction.LEFT));
+		
+		this.addWall(new WallCornerOuter(this.engine, x + 16, y + 16 * height, Direction.UP));
+		this.addWall(new WallCornerOuter(this.engine, x + 32, y + 16 * height, Direction.LEFT));
+
+		x = 128 + 16;
+
+		this.addWall(new WallCorner(this.engine, x + 16, y - 16, Direction.RIGHT));
+		this.addWall(new WallCorner(this.engine, x + 32, y - 16, Direction.UP));
+		
+		this.addWall(new Wall(this.engine, x + 16, y, 1, height, Direction.RIGHT));
+		this.addWall(new Wall(this.engine, x + 32, y, 1, height, Direction.LEFT));
+		
+		this.addWall(new WallCornerOuter(this.engine, x + 16, y + 16 * height, Direction.UP));
+		this.addWall(new WallCornerOuter(this.engine, x + 32, y + 16 * height, Direction.LEFT));
 	}
 
 	public exited(door: Door): void {
