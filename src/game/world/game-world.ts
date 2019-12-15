@@ -23,28 +23,31 @@ export class MainWorld extends GameWorld{
 		super(engine);
 		this.transform.position.x = 16;
 		this.transform.position.y = 16;
+	}
+
+	public async prefetchAssets():Promise<void> {
+		try {
+			await this.engine.assetLoaders.textureLoader.getLoadedAsset("player.png");
+			await this.engine.assetLoaders.textureLoader.getLoadedAsset("death.png");
+			await this.engine.assetLoaders.textureLoader.getLoadedAsset("blue-ball.png");
+			await this.engine.assetLoaders.textureLoader.getLoadedAsset("heart.png");
+			await this.engine.assetLoaders.textureLoader.getLoadedAsset("fireball.png");
+			await this.engine.assetLoaders.textureLoader.getLoadedAsset("begar-satisfied.png");
+			await this.engine.assetLoaders.audioLoader.getLoadedAsset("door-enter.wav");
+			await this.engine.assetLoaders.audioLoader.getLoadedAsset("damage-taken.wav");
+			await this.engine.assetLoaders.audioLoader.getLoadedAsset("freed.wav");
+			await this.engine.assetLoaders.audioLoader.getLoadedAsset("health.wav");
+			await this.engine.assetLoaders.audioLoader.getLoadedAsset("blue-ball-dead.wav");
+		}catch (err) {
+			console.log(err);
+		}
+	}
+
+	public start():void {
 		this.player = new Player(this.engine);
 		this.player.transform.position.x = 128;
 		this.player.transform.position.y = 64;
 
-		this.start();
-	}
-
-	public async start():Promise<void> {
-		console.log("STARTING");
-		await this.engine.assetLoaders.textureLoader.getLoadedAsset("player.png");
-		await this.engine.assetLoaders.textureLoader.getLoadedAsset("death.png");
-		await this.engine.assetLoaders.textureLoader.getLoadedAsset("blue-ball.png");
-		await this.engine.assetLoaders.textureLoader.getLoadedAsset("heart.png");
-		await this.engine.assetLoaders.textureLoader.getLoadedAsset("fireball.png");
-		await this.engine.assetLoaders.textureLoader.getLoadedAsset("begar-satisfied.png");
-		await this.engine.assetLoaders.audioLoader.getLoadedAsset("door-enter.wav");
-		await this.engine.assetLoaders.audioLoader.getLoadedAsset("damage-taken.wav");
-		await this.engine.assetLoaders.audioLoader.getLoadedAsset("freed.wav");
-		await this.engine.assetLoaders.audioLoader.getLoadedAsset("health.wav");
-		await this.engine.assetLoaders.audioLoader.getLoadedAsset("blue-ball-dead.wav");
-		
-		console.log("STARTED");
 		this.room1 = new Room1(this.engine, this.player);
 		this.room2 = new Room2(this.engine, this.player);
 		this.room3 = new Room3(this.engine, this.player);

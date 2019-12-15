@@ -32,7 +32,7 @@ export class Begar extends SimObject {
 	}
 
 	public giveHealth(player:Player):boolean {
-		if (this.need >= player.health) {
+		if (this.need > player.health) {
 			return false;
 		}
 

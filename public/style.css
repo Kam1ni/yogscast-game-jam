@@ -5,10 +5,13 @@ html, body, #game-container, .canvas-container {
 	overflow-y:hidden;
 	margin:0;
 	padding:0;
-	font-family: 'Press Start 2P', cursive;
 	transform-origin: top left;
 	position: relative;
 	background-color: black;
+}
+
+* {
+	font-family: 'Press Start 2P', cursive;
 }
 
 .canvas-container{
@@ -16,6 +19,32 @@ html, body, #game-container, .canvas-container {
 	flex-direction: row;
 	justify-content: center;
 	align-items: center;
+}
+
+.screen {
+	position:fixed;
+	width: 100vw;
+	height: 100vh;
+	background-color: black;
+	top:0;
+	left:0;
+	z-index: 10;
+}
+
+.menu {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+}
+
+button {
+	background:none;
+	border:none;
+	color:white;
+	margin: 50px;
+	font-size: 2em;
+	cursor: pointer;
 }
 
 canvas {
