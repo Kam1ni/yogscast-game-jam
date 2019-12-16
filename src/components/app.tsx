@@ -63,7 +63,8 @@ export class App extends React.Component{
 	public componentDidMount():void {
 		this.engine = new Engine(document.getElementById("game-canvas") as HTMLCanvasElement);
 		this.engine.init();
-		this.engine.setCanvasSize(new Vector2((256 + 32) * 4, (128 + 32) * 4));
+		let standardCanvasSize = new Vector2((256 + 32) * 4, (128 + 32) * 4);
+		this.engine.setCanvasSize(standardCanvasSize);
 		//this.engine.renderBoundingBoxes = true;
 		this.mainWorld = new MainWorld(this.engine);
 		this.mainWorld.prefetchAssets().then(()=> {
@@ -74,5 +75,20 @@ export class App extends React.Component{
 		this.engine.getCamera().transform.scale.y = 4;
 		this.engine.getCamera().transform.scale.z = 4;
 		this.engine.start();
+
+		let applyEngineViewPortSize = ()=> {
+			let width = window.innerWidth / standardCanvasSize.x;
+			let height = window.innerHeight / standardCanvasSize.y;
+			if (width < height) {
+				this.engine.getCanvas().style.transform = `scale(${width}, ${width})`;
+			}else {
+				this.engine.getCanvas().style.transform = `scale(${height}, ${height})`;
+			}
+			console.log(this.engine.getCanvas());
+			console.log(this.engine.getCanvas().style.transform);
+		};
+
+		window.addEventListener("resize",applyEngineViewPortSize);
+		applyEngineViewPortSize();
 	}
 }
