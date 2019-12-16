@@ -84,8 +84,6 @@ export class App extends React.Component{
 			}else {
 				this.engine.getCanvas().style.transform = `scale(${height}, ${height})`;
 			}
-			console.log(this.engine.getCanvas());
-			console.log(this.engine.getCanvas().style.transform);
 		};
 
 		window.addEventListener("resize",applyEngineViewPortSize);
