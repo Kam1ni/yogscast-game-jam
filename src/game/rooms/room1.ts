@@ -42,24 +42,7 @@ export class Room1 extends Room {
 		this.begar.transform.position.x = 128;
 		this.begar.transform.position.y = 128 - 8;
 		this.addBegar(this.begar);
-
-		this.addWall(new Wall(this.engine, 0, 128, 16, 1, Direction.DOWN));
-		this.addWall(new Wall(this.engine, 0, -16, 16, 1,  Direction.UP));
-		this.addWall(new Wall(this.engine, -16, 0, 1, 8, Direction.LEFT));
-		this.addWall(new Wall(this.engine, 256, 0, 1, 8, Direction.RIGHT));
-
-		let corner = new WallCorner(this.engine, -16, -16, Direction.UP);
-		this.addWall(corner);
-
-		corner = new WallCorner(this.engine, 256, 128, Direction.DOWN);
-		this.addWall(corner);
-
-		corner = new WallCorner(this.engine, 256, -16, Direction.RIGHT);
-		this.addWall(corner);
-
-		corner = new WallCorner(this.engine, -16, 128, Direction.LEFT);
-		this.addWall(corner);
-
+		this.buildDefaultWall();
 
 		let torch = new Torch(this.engine);
 		torch.transform.position.x = 8;

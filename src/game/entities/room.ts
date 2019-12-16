@@ -8,6 +8,8 @@ import { Projectile } from "./projectile";
 import { Floor } from "../graphics/floor";
 import { Door } from "./door";
 import { Heart } from "./heart";
+import { Direction } from "../utils/direction";
+import { WallCorner } from "./wall-corner";
 
 export abstract class Room extends SimObject {
 	public background:Floor;
@@ -37,6 +39,46 @@ export abstract class Room extends SimObject {
 		this.buildLevel();
 
 		this.player = player;
+	}
+
+	public buildDefaultWall():void {
+		// The transformations of the hitbox is to prevent players with sub optimal performance from glitching out of the room
+		let wall = new Wall(this.engine, 0, 128, 16, 1, Direction.DOWN);
+		wall.hitbox.size.x = 512;
+		wall.hitbox.size.y = 512;
+		wall.hitbox.transform.position.y = 256;
+		this.addWall(wall);
+
+		wall = new Wall(this.engine, 0, -16, 16, 1,  Direction.UP);
+		this.addWall(wall);
+		wall.hitbox.size.x = 512;
+		wall.hitbox.size.y = 512;
+		wall.hitbox.transform.position.y = -240;
+
+		wall = new Wall(this.engine, -16, 0, 1, 8, Direction.LEFT);
+		wall.hitbox.size.x = 512;
+		wall.hitbox.size.y = 512;
+		wall.hitbox.transform.position.x = -240;
+		this.addWall(wall);
+
+		wall = new Wall(this.engine, 256, 0, 1, 8, Direction.RIGHT);
+		wall.hitbox.size.x = 512;
+		wall.hitbox.size.y = 512;
+		wall.hitbox.transform.position.x = 256;
+		this.addWall(wall);
+
+		let corner = new WallCorner(this.engine, -16, -16, Direction.UP);
+		this.addWall(corner);
+
+		corner = new WallCorner(this.engine, 256, 128, Direction.DOWN);
+		this.addWall(corner);
+
+		corner = new WallCorner(this.engine, 256, -16, Direction.RIGHT);
+		this.addWall(corner);
+
+		corner = new WallCorner(this.engine, -16, 128, Direction.LEFT);
+		this.addWall(corner);
+
 	}
 
 	public abstract buildLevel():void;
