@@ -2,6 +2,7 @@ import React from "react";
 import { eventBus } from "@/utils/event-bus";
 import { BegarSkin } from "@/game/entities/begar";
 import { SavedBegars } from "./saved-begars";
+import { settings } from "@/utils/settings";
 
 type HudProps = {
 	onGameOver:Function;
@@ -64,7 +65,8 @@ export class Hud extends React.Component<HudProps> {
 		});
 
 		eventBus.on("score", (toAddScore:number)=> {
-			this.setState({...this.state, score:this.state.score + toAddScore});
+			console.log(toAddScore, settings.difficulty);
+			this.setState({...this.state, score:this.state.score + (toAddScore * settings.difficulty)});
 		});
 
 		eventBus.on("game-over", ()=> {

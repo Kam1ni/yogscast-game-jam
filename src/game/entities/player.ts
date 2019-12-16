@@ -4,6 +4,7 @@ import { Character } from "./character";
 import { Projectile } from "./projectile";
 import { eventBus } from "@/utils/event-bus";
 import { PlayerSprite } from "../graphics/player-sprite";
+import { settings } from "@/utils/settings";
 
 const SIZE = 16;
 const CHECK_HITBOX_SIZE = 16;
@@ -22,6 +23,13 @@ export class Player extends Character{
 
 	public constructor(engine:Engine) {
 		super(engine);
+		if (settings.difficulty == 1) {
+			this.acceleration = 1;
+			this.maxSpeed = 128;
+		}else {
+			this.acceleration = 0.5;
+			this.maxSpeed = 256;
+		}
 		this.sprite = new PlayerSprite(this.engine);
 		this.sprite.transform.position.x = -SIZE / 2;
 		this.sprite.transform.position.y = -SIZE / 2;

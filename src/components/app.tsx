@@ -6,6 +6,7 @@ import { Menu } from "./menu";
 import { Credits } from "./credits";
 import { Intro } from "./intro";
 import { eventBus } from "@/utils/event-bus";
+import { settings, Difficulty } from "@/utils/settings";
 
 type Screen = "menu" | "game" | "credits" | "intro";
 
@@ -28,7 +29,7 @@ export class App extends React.Component{
 	public render():JSX.Element {
 		let extraItems = [] as JSX.Element[];
 		if (this.state.screen == "menu") {
-			extraItems.push(<Menu key="menu" loaded={this.state.loaded} onCredits={()=>this.setScreen("credits")} onStart={()=>this.setScreen("intro")}/>);
+			extraItems.push(<Menu key="menu" loaded={this.state.loaded} onCredits={()=>this.setScreen("credits")} onStart={(difficulty:Difficulty)=>this.start(difficulty)}/>);
 		}
 		if (this.state.screen == "credits") {
 			extraItems.push(<Credits exit={()=>this.setScreen("menu")} key="credits"/>);
@@ -45,6 +46,11 @@ export class App extends React.Component{
 				<canvas id="game-canvas"></canvas>
 			</div>
 		);
+	}
+
+	public start(difficulty:Difficulty):void {
+		settings.difficulty = difficulty;
+		this.setScreen("intro");
 	}
 
 	public setScreen(screen:Screen):void {
