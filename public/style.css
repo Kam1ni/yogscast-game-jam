@@ -12,6 +12,7 @@ html, body, #game-container, .canvas-container {
 
 * {
 	font-family: 'Press Start 2P', cursive;
+	font-wieght: 400;
 	color: white;
 	background-color: transparent;
 }
