@@ -8,7 +8,7 @@
 		"lint": "tslint --project . --fix"
 	},
 	"author": "Kamil Krzysztof Kulach",
-	"license": "UNLICENSED",
+	"license": "MIT",
 	"dependencies": {
 		"scrapy-engine": "0.0.15"
 	},
