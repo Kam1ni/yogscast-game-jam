@@ -2,7 +2,7 @@ import React from "react";
 import {Engine, Color, FreeCamera, OrthographicCamera, degToRadians, PerspectiveCamera, Vector2} from "scrapy-engine";
 import {Hud} from "./hud";
 import { MainWorld } from "@/game/world/game-world";
-import { Menu } from "./Menu";
+import { Menu } from "./menu";
 import { Credits } from "./credits";
 import { Intro } from "./intro";
 import { eventBus } from "@/utils/event-bus";
