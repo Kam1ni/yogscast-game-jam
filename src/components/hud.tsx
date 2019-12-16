@@ -71,7 +71,7 @@ export class Hud extends React.Component<HudProps> {
 
 		eventBus.on("game-over", ()=> {
 			if (this.state.savedBegars.length == 6) {
-				this.setState({...this.state, endText:"You saved everyone. But at wath cost?"});
+				this.setState({...this.state, endText:"You saved everyone. But at what cost?"});
 			}else {
 				this.setState({...this.state, endText:"Game Over"});
 			}
