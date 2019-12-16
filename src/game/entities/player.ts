@@ -89,7 +89,7 @@ export class Player extends Character{
 		}
 
 		if (this.engine.input.isKeyPressed(Keys.Space)) {
-			if (this.canAttack()) {
+			if (this.canAttack() && !this.getRoom().preventFire) {
 				this.attack();
 			}
 		}

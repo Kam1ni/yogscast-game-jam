@@ -26,6 +26,7 @@ export abstract class Room extends SimObject {
 	protected isEnding:boolean = false;
 	protected entrance:Door;
 	protected exit:Door;
+	public preventFire:boolean = false;
 
 	public constructor(engine:Engine, player:Player) {
 		super(engine);
@@ -153,33 +154,38 @@ export abstract class Room extends SimObject {
 
 
 	public update(dt:number):void {
+		this.preventFire = false;
 		if (this.isStarting) {
 			this.doStartSequence(dt);
+			this.preventFire = true;
 		}
 		if (this.isEnding) {
 			this.doEndSequence(dt);
+			this.preventFire = true;
 		}
 		if (this.player.health == 0) {
 			return;
 		}
-		super.update(dt);
-		if (!this.isStarted) return;
-
-		if (this.engine.input.isKeyPressed(Keys.Space)) {
+		
+		if (this.engine.input.isKeyPressed(Keys.Space) && !this.preventFire) {
 			let touchingDoor = this.checkForTouchingOpenDoor();
 			if (touchingDoor) {
 				this.exitRoom(touchingDoor);
+				this.preventFire = true;
 				return;
 			}
-
+			
 			let touchingBegar = this.checkForTouchingBegar();
 			if (touchingBegar) {
 				if (touchingBegar.giveHealth(this.player)) {
 					this.begars.splice(this.begars.indexOf(touchingBegar), 1);
+					this.preventFire = true;
 				}
 			}
 		}
-
+		super.update(dt);
+		if (!this.isStarted) return;
+		
 		if (this.enemies.length == 0) {
 			for (let door of this.doors) {
 				door.open();
