@@ -13,11 +13,11 @@
 	<div id="game-container"></div>
 	<script type="text/javascript">
 		let baseTag = document.createElement("base");
-		let url = location.href;
+		let url = location.pathname;
 		if (url.match(/index\.html$/)){
 			url = url.substr(0, url.length - "index.html".length);
 		}
-		baseTag.baseURI = url;
+		baseTag.baseURI = location.origin + url;
 		document.head.append(baseTag);
 	</script>
 
